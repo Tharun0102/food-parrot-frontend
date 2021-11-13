@@ -1,0 +1,40 @@
+.home {
+    // width: 100vh;
+    width: 100%;
+    height: 100vh;
+    background-image: url(../../../images/welcome-background.png);
+    background-size: cover;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+
+    .company {
+        .company-name {
+            text-align: left;
+            color: white;
+            padding-left: 5%;
+            font-weight: bold;
+
+            span {
+                color: #FAB62B;
+            }
+        }
+
+        .tag {
+            color: #D7591A;
+        }
+
+        .users {
+            margin-top: 20%;
+            display: flex;
+            justify-content: space-evenly;
+
+            .user-btn {
+                background-color: #FAB62B;
+                border-radius: 30px;
+                font-size: 1rem;
+            }
+        }
+    }
+
+}
