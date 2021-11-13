@@ -1,4 +1,4 @@
-import { UPDATE_CLIENT, UPDATE_RESTAURANT } from '../constants'
+import { UPDATE_CLIENT, UPDATE_RESTAURANT } from '../../constants/constants'
 
 export const UpdateRestaurantUser = (payload) => {
   return {

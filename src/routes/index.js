@@ -4,7 +4,8 @@ import PrivateRoute from "./PrivateRoute";
 import Loader from "../components/utill/Loader";
 
 const Welcome = React.lazy(() => import('../components/pages/Welcome/Welcome'))
-const Login = React.lazy(() => import('../components/pages/Login/Login'))
+const Login = React.lazy(() => import('../components/pages/Auth/Login.js'))
+const Signup = React.lazy(() => import('../components/pages/Auth/Signup.js'))
 const Dashboard = React.lazy(() => import('../components/pages/Dashboard/Dashboard'))
 
 const AppRouter = () => {
@@ -15,8 +16,14 @@ const AppRouter = () => {
         <Switch>
           <PrivateRoute
             exact
-            path="/login"
+            path="/login/:type"
             component={Login}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path="/signup/:type"
+            component={Signup}
             isAuthenticated={isAuthenticated}
           />
           <PrivateRoute

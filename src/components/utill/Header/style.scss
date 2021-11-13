@@ -1,0 +1,23 @@
+.header-container{
+  position: absolute;
+  top:0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 2rem;
+  .header-left{
+    .back-btn{
+      height: 35px;
+      width:50px;
+    }
+  }
+  .header-right{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    .auth-btn{
+      color:#FFFFFF;
+    }
+  }
+}
