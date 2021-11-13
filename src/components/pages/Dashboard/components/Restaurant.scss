@@ -1,0 +1,7 @@
+.restaurant-card{
+  cursor: pointer;
+  &:hover{
+    transform: scale(1.01);
+    box-shadow: 7px 7px 10px #e5e5e5 ;
+  }
+}

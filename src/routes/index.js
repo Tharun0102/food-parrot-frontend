@@ -6,7 +6,8 @@ import Loader from "../components/utill/Loader";
 const Welcome = React.lazy(() => import('../components/pages/Welcome/Welcome'))
 const Login = React.lazy(() => import('../components/pages/Auth/Login.js'))
 const Signup = React.lazy(() => import('../components/pages/Auth/Signup.js'))
-const Dashboard = React.lazy(() => import('../components/pages/Dashboard/Dashboard'))
+const Dashboard = React.lazy(() => import('../components/pages/Dashboard'))
+const RestaurantHome = React.lazy(() => import('../components/pages/RestaurantHome/RestaurantHome'))
 
 const AppRouter = () => {
   const isAuthenticated = true
@@ -28,8 +29,14 @@ const AppRouter = () => {
           />
           <PrivateRoute
             exact
-            path="/dashboard"
+            path="/dashboard/:type"
             component={Dashboard}
+            isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path="/Restaurant/:id"
+            component={RestaurantHome}
             isAuthenticated={isAuthenticated}
           />
           <PrivateRoute

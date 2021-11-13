@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
 import OutlinedInput from '@mui/material/OutlinedInput';
 import Typography from '@mui/material/Typography';
 import validate from './Validate';
-import { useParams } from 'react-router-dom';
 import background from '../../../images/auth-background.png';
 import Header from '../../utill/Header/Header';
 import { GoogleLogin } from 'react-google-login';
