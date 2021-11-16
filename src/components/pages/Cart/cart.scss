@@ -1,10 +1,15 @@
 .cart-container{
-  margin: 0 30px 30px 30px;
+  margin:30px;
   border: 1px solid #3d3d3d;
-  flex-grow: 1;
+  flex-grow: 0;
+  width: 450px;
   height: fit-content;
   .title{
 
+  }
+  .sub-title{
+    text-align: left;
+    margin: 10px 30px;
   }
   .items-list{
 
@@ -12,4 +17,8 @@
   .cart-footer{
     padding: 1rem 0;
   }
+}
+.order-modal{
+  width: 350px;
+  // height: 200px;
 }

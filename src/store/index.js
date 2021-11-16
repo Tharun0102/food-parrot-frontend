@@ -2,6 +2,7 @@ import { createStore, applyMiddleware, compose } from "redux";
 import thunk from "redux-thunk";
 import logger from "redux-logger";
 import user from "./reducers/User";
+import CartReducer from './reducers/Cart.js';
 
 import { persistStore, persistCombineReducers } from "redux-persist";
 import storage from "redux-persist/es/storage";
@@ -19,6 +20,7 @@ export default function configureStore() {
   // reducers
   const appReducer = persistCombineReducers(config, {
     user: user,
+    cart: CartReducer
   });
 
   const rootReducer = (state, action) => {

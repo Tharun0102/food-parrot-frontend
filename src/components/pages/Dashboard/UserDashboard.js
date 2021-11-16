@@ -54,7 +54,7 @@ const UserDashboard = () => {
 
   return (
     <Box display="flex">
-      <Box className="user-dashboard">
+      <Box className="user-dashboard" flexGrow="1">
         <Typography>Customer Dashboard</Typography>
         <Box className="restaurants-search">
           <OutlinedInput
