@@ -1,40 +1,25 @@
 .home {
-    // width: 100vh;
     width: 100%;
-    height: 100vh;
-    background-image: url(../../../images/welcome-background.png);
-    background-size: cover;
-    display: flex;
-    justify-content: left;
-    align-items: center;
-
+    height: 100%;
     .company {
+        flex: 1;
         .company-name {
-            text-align: left;
-            color: white;
-            padding-left: 5%;
             font-weight: bold;
-
-            span {
-                color: #FAB62B;
-            }
+            color: #FAB62B;
+            font-size: 3rem;
         }
-
         .tag {
             color: #D7591A;
         }
-
-        .users {
-            margin-top: 20%;
-            display: flex;
-            justify-content: space-evenly;
-
+        .home-footer {
             .user-btn {
                 background-color: #FAB62B;
-                border-radius: 30px;
+                border-radius: 6px;
                 font-size: 1rem;
             }
         }
     }
-
+    .home-image-wrapper{
+        flex:1
+    }
 }

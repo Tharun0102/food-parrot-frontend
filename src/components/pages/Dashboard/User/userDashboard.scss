@@ -1,11 +1,16 @@
 .user-dashboard{
+  padding: 20px 0;
+  .page-title{
+    font-family: Poppins;
+    font-size: 18px;
+  }
   .restaurants-search{
     display: flex;
     align-items: center;
     margin: 1rem auto;
     width: fit-content;
     .input-field{
-      width: 230px;
+      width: 300px;
       margin-right: 20px;
       height: 40px;
     }
@@ -14,8 +19,6 @@
     }
   }
   .restaurants-list-container{
-    display: flex;
-    flex-direction: column;
     min-height: 400px;
     .restaurants-list{
       display: grid;
@@ -26,9 +29,16 @@
       margin:1rem auto;
     }
     .noData-container{
-      background-color: rgb(198, 222, 238);
       width: 800px;
       margin: 0 auto;
+      .empty-list-icon{
+        height: 80px;
+        width: 80px;
+        margin-bottom: 10px;
+      }
+      .empty-text{
+        font-family: Poppins;
+      }
     }
   }
 }

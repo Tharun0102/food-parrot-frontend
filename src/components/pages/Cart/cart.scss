@@ -11,8 +11,21 @@
     text-align: left;
     margin: 10px 30px;
   }
-  .items-list{
+  .cart-content{
 
+    .items-list{
+  
+    }
+    .noData-container{
+      .empty-cart-icon{
+        width: 80px;
+        height: 80px;
+        margin: 10px 0;
+      }
+      .exmpty-text{
+        font-family: Poppins;
+      }
+    }
   }
   .cart-footer{
     padding: 1rem 0;

@@ -2,20 +2,24 @@ import React, { useEffect } from 'react'
 import { useHistory, useParams } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import Header from '../../utill/Header/Header';
-import RestaurantDashboard from './RestaurantDashboard';
-
+import RestaurantDashboard from './Restaurant/RestaurantDashboard';
 import './dashboard.scss'
-import UserDashboard from './UserDashboard';
+import UserDashboard from './User/UserDashboard';
+import { useSelector } from 'react-redux';
+
+import { USER_TYPE, RESTAURANT_TYPE } from '../../../constants/constants';
 
 const Dashboard = () => {
+  const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
 
-  const USER_TYPE = 'user';
-  const RESTAURANT_TYPE = 'restaurant';
+  const isUserRoute = params.type == USER_TYPE;
+  const isRestaurantRoute = params.type == RESTAURANT_TYPE;
+  const isValidRoute = isUserRoute || isRestaurantRoute;
 
   useEffect(() => {
-    if (params.type !== USER_TYPE && params.type !== RESTAURANT_TYPE) {
+    if (!isValidRoute || (isRestaurantRoute && !user?.isLogged)) {
       history.push("/");
     }
   }, [])

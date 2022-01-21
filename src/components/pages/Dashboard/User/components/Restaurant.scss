@@ -1,4 +1,8 @@
 .restaurant-card{
+  .card-image-component{
+    width: 270px;
+    height: 230px;
+  }
   cursor: pointer;
   &:hover{
     transform: scale(1.01);

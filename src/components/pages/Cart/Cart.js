@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import tempImg from '../../../images/auth-background.png'
 import MenuItem from '../RestaurantHome/components/MenuItem';
 import { useSelector } from 'react-redux';
-
+import emptyCart from '../../../images/empty-cart.png';
 import './cart.scss';
 import CustomModal from '../../utill/Modal/Modal';
 
@@ -91,7 +91,7 @@ const Cart = () => {
       {itemList?.length > 0 &&
         <Typography className="sub-title">Restaurant: {itemList[0].Restaurant}</Typography>
       }
-      <Box>
+      <Box className='cart-content'>
         {
           itemList.length > 0 &&
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="items-list">
@@ -104,8 +104,9 @@ const Cart = () => {
         }
         {
           itemList.length === 0 &&
-          <Box display="flex" justifyContent="center" alignItems="center" flexGrow="1" className="noData-container">
-            <Typography>Cart is Empty!</Typography>
+          <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" flexGrow="1" className="noData-container">
+            <img className='empty-cart-icon' src={emptyCart} alt="empty-cart" />
+            <Typography className="empty-text">Cart is Empty!</Typography>
           </Box>
         }
       </Box>

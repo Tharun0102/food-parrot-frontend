@@ -1,0 +1,50 @@
+.admin-menu {
+    position: fixed;
+    z-index: 10;
+    width: 300px;
+    height: 100%;
+    border-right: 1px solid #f0f1f3;
+    .restaurant-title {
+        padding: 10px 0 10px 20px;
+        text-align: left;
+        font-family: Poppins;
+        text-transform: capitalize;
+        font-size: 20px;
+        border-bottom: 2px solid #3D3D3D;
+    }
+    .admin-list {
+        .nav-link {
+            padding: 10px 0 10px 20px;
+            color: #3D3D3D;
+            font-family: Poppins;
+            font-size: 17px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            &:hover{
+                color: #123FBC;
+            }
+            .requests-icon{
+                height: 24px;
+                width: 24px;
+            }
+        }
+        .nav-link.selected-link{
+            color: #123FBC;
+            transform: scale(1.05);
+        }
+        .nav-link.logout{
+            color: #d8353d
+        }
+    }
+    .admin-list div {
+        margin: 30px;
+        font-size: 20px;
+        font-weight: 300;
+    }
+}
+.content-wrapper{
+  position: absolute;
+  left: 320px;
+}

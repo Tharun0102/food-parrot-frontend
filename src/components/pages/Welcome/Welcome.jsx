@@ -1,46 +1,55 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
-// import background from '../../../images/welcome-background.png';
+import Header from '../../utill/Header/Header';
 import './welcome.scss';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { useHistory } from 'react-router';
-
+import homeImage from './images/home-page-image.jpg'
+import { useSelector } from 'react-redux';
 
 const Welcome = () => {
-
   const history = useHistory();
+  const user = useSelector((state)=>state.user);
 
+  useEffect(()=>{
+    user.isLogged && history.push(`/dashboard/${user.userType}`) 
+  },[])
 
   return (
-    <Box className="home">
-
-      <Box className="company">
-        <Typography className="company-name" variant="h1" component="h2" >
-          <i>INSTA<span>FOOD</span></i>
-        </Typography>
-        <Typography className="tag">
-          Order Here & Get the food instantly.
-        </Typography>
-
-        <Box className="users">
-          <Button
-            variant="contained"
-            className="user-btn"
-            onClick={() => { history.push("/signup/restaurant") }}
-          >
-            Add Restaurant
-          </Button>
-          <Button
-            variant="contained"
-            className="user-btn"
-            onClick={() => { history.push("/signup/user") }}
-          >
-            Make Order
-          </Button>
+    <Header page="welcome">
+      <Box display="flex" justifyContent="center" alignItems="center" className="home">
+        <Box display="flex" flexDirection="column" gap="30px" className="company">
+          <Box display="flex" flexDirection="column" alignItems="center">
+            <Typography className="company-name" >
+              <i><span>INSTAFOOD</span></i>
+            </Typography>
+            <Typography className="tag">
+              Order now & Get your favourite food instantly.
+            </Typography>
+          </Box>
+          <Box display="flex" justifyContent="center" gap="20px" className="home-footer">
+            <Button
+              variant="contained"
+              className="user-btn"
+              onClick={() => { history.push("/signup/Restaurant") }}
+            >
+              Add Your Restaurant
+            </Button>
+            <Button
+              variant="contained"
+              className="user-btn"
+              onClick={() => { history.push("/dashboard/User") }}
+            >
+              Order Now
+            </Button>
+          </Box>
+        </Box>
+        <Box className="home-image-wrapper">
+          <img src={homeImage} alt="home-page-icon"/>
         </Box>
       </Box>
-    </Box>
+    </Header>
   )
 }
 

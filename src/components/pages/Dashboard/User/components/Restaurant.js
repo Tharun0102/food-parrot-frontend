@@ -12,23 +12,26 @@ import { useHistory } from 'react-router-dom';
 const Restaurant = ({ data }) => {
 
   const history = useHistory();
-
+  const defaultImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
   const handleCardClick = () => {
-    history.push(`/Restaurant/${data?.id}`);
+    history.push(`/Restaurant/${data?._id}`);
   }
 
   return (
     <Card sx={{ maxWidth: 345 }} className="restaurant-card" onClick={handleCardClick}>
       <CardMedia
         component="img"
-        height="194"
-        image={data?.img}
-        alt="Paella dish"
+        image={data?.imageUrl || defaultImageUrl}
+        alt="No image available"
+        className='card-image-component'
       />
       <CardContent>
         <Typography className="card-title">{data?.name}</Typography>
         <Typography variant="body2" color="text.secondary">
           {data?.description || 'No Description available!'}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {data.address.street},{data.address.city}
         </Typography>
         <Box className="rating-container">
           <Rating name="half-rating" value={data?.rating || 0} precision={0.1} readOnly />

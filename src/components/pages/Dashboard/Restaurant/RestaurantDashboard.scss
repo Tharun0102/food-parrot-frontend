@@ -1,0 +1,14 @@
+
+.stats-container {
+    display: flex;
+    align-items: center;
+    .card {
+        cursor: pointer;
+        background-color: #F2FFE9;
+        .card-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}
