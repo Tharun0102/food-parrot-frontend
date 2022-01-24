@@ -1,4 +1,4 @@
-import { UPDATE_CLIENT, UPDATE_RESTAURANT } from '../../constants/constants';
+import { LOGOUT, UPDATE_CLIENT, UPDATE_RESTAURANT } from '../../constants/constants';
 const InitialState = {}
 
 const userReducer = (state = InitialState, action) => {
@@ -14,6 +14,8 @@ const userReducer = (state = InitialState, action) => {
       return {
         ...payload
       };
+    case LOGOUT:
+      return InitialState
     default:
       return state;
   }

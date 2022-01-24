@@ -10,9 +10,9 @@ import Rating from '@mui/material/Rating';
 import { useHistory } from 'react-router-dom';
 
 const Restaurant = ({ data }) => {
-
   const history = useHistory();
-  const defaultImageUrl = 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/65/No-Image-Placeholder.svg/1665px-No-Image-Placeholder.svg.png'
+  const url = data?.imageUrl.split('\\');
+  const imageUrl = `http://localhost:5000/${url[0]}/${url[1]}`;
   const handleCardClick = () => {
     history.push(`/Restaurant/${data?._id}`);
   }
@@ -21,7 +21,7 @@ const Restaurant = ({ data }) => {
     <Card sx={{ maxWidth: 345 }} className="restaurant-card" onClick={handleCardClick}>
       <CardMedia
         component="img"
-        image={data?.imageUrl || defaultImageUrl}
+        image={imageUrl}
         alt="No image available"
         className='card-image-component'
       />

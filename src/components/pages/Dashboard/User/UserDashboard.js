@@ -42,9 +42,8 @@ const UserDashboard = () => {
 
   return (
     <Header>
-      <Box display="flex">
+      <Box display="flex" className='dashboard-wrapper'>
         <Box className="user-dashboard" flexGrow="1">
-          <Typography className="page-title">Customer Dashboard</Typography>
           <Box className="restaurants-search">
             <OutlinedInput
               placeholder="Search for Restaurant or it's area"

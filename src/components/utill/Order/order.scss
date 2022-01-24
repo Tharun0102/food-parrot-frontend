@@ -1,0 +1,19 @@
+.order-card{
+  transition: all .5s;
+  &:hover{
+    transform: scale(1.05);
+  }
+}
+.order-info{
+  .info-key{
+    font-family: Poppins;
+    font-size: 15px;
+    color: #3D3D3D;
+    font-weight: 700;
+  }
+  .info-value{
+    font-family: Poppins;
+    font-size: 15px;
+    color: #3D3D3D;
+  }
+}

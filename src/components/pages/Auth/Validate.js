@@ -22,9 +22,6 @@ export default function validate(data) {
   if (data.zip !== undefined) {
     errors.zip = validateZipCode(data.zip) ? '' : 'invalid zip code';
   }
-  // if (data.imageUrl !== undefined) {
-  //   errors.imageUrl = isValidImageURL(data.imageUrl) ? '' : 'select a valid image';
-  // }
   return errors;
 }
 

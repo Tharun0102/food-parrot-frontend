@@ -54,11 +54,12 @@ const Login = () => {
     try {
       if (params.type === USER) {
         const resp = await UserLogin(payload);
-        dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER }));
+        dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
         const resp = await RestaurantLogin(payload);
-        dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT }));
+        console.log(resp, resp.headers, resp.headers['x-auth-token']);
+        dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }
     } catch (err) {

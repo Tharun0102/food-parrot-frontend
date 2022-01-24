@@ -1,7 +1,6 @@
 .menu-item{
-  flex-grow: 1;
   margin-bottom: 1rem;
-  width: 400px;
+  width: 370px;
   padding: .5rem .3rem;
   border: 1px solid #3D3D3D;
   .item-img{
@@ -18,4 +17,8 @@
     justify-content: flex-start;
     margin-left: 1rem;
   }
+}
+.cancel-btn, .confirm-btn{
+  text-transform: none;
+  padding: 5px 10px;
 }

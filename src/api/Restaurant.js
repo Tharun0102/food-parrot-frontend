@@ -39,3 +39,22 @@ export const getMenuItems = async (restaurantId) => {
     throw Error(err.message || "something went wrong!");
   }
 }
+
+export const addMenuItem = async (payload, restaurantId, token) => {
+  try {
+    const resp = await axios.post(`${BASE_URL}/restaurant/${restaurantId}/addItem`, payload,
+      {
+        headers: {
+          'x-auth-token': token
+        }
+      })
+    if (resp.status === 200) {
+      return resp?.data;
+    } else {
+      throw Error(resp.data.error || "something went wrong!");
+    }
+  } catch (err) {
+    throw Error(err.message || "something went wrong!");
+  }
+}
+

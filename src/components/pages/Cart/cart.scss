@@ -16,22 +16,22 @@
     .items-list{
   
     }
-    .noData-container{
-      .empty-cart-icon{
-        width: 80px;
-        height: 80px;
-        margin: 10px 0;
-      }
-      .exmpty-text{
-        font-family: Poppins;
-      }
-    }
   }
   .cart-footer{
     padding: 1rem 0;
+    .total-text{
+      text-align: center;
+    }
+    .cancel-btn, .confirm-btn{
+      text-transform: none;
+      padding: 5px 10px;
+    }
   }
 }
 .order-modal{
-  width: 350px;
-  // height: 200px;
+  width: 450px;
+  .item-input{
+    width: 400px;
+    margin-bottom: 10px;
+  }
 }

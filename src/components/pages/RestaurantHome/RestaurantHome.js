@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import { useParams } from 'react-router';
-import MenuItem from './components/MenuItem';
+import MenuItem from '../../utill/MenuItem/MenuItem';
 import Cart from '../Cart/Cart';
 import Header from '../../utill/Header/Header';
 import { getMenuItems, getRestaurant } from '../../../api/Restaurant';
@@ -40,7 +40,7 @@ const RestaurantHome = () => {
 
   return (
     <Header>
-      <Box display="flex">
+      <Box display="flex" style={{ overflowX: 'hidden' }}>
         <Box className="restaurant-home" flexGrow="1">
           <Box>
             <If condition={fetching}>
@@ -49,24 +49,26 @@ const RestaurantHome = () => {
               </Box>
             </If>
             <If condition={!fetching}>
-              <Typography>{data?.name || "Restaurant Name"}</Typography>
-              {
-                menuItems.length > 0 &&
-                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="menuItems-list">
-                  {
-                    menuItems.map((item, index) => {
-                      return <MenuItem data={item} />
-                    })
-                  }
-                </Box>
-              }
-              {
-                menuItems.length === 0 &&
-                <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" flexGrow="1" className="noData-container">
-                  <img className="empty-list-icon" src={emptyList} alt="empty-list" />
-                  <Typography className="empty-text">No Items Found!</Typography>
-                </Box>
-              }
+              <Box display="flex" flexDirection="column" alignItems="center">
+                <Typography>{data?.name || "Restaurant Name"}</Typography>
+                {
+                  menuItems.length > 0 &&
+                  <Box display="flex" gap="20px" alignItems="center" flexWrap="wrap" className="menuItems-list">
+                    {
+                      menuItems.map((item, index) => {
+                        return <MenuItem data={item} restaurantName={data?.name} />
+                      })
+                    }
+                  </Box>
+                }
+                {
+                  menuItems.length === 0 &&
+                  <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" flexGrow="1" className="noData-container">
+                    <img className="empty-list-icon" src={emptyList} alt="empty-list" />
+                    <Typography className="empty-text">No Items Found!</Typography>
+                  </Box>
+                }
+              </Box>
             </If>
           </Box>
         </Box>

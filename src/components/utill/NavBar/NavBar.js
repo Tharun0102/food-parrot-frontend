@@ -6,6 +6,7 @@ import { USER } from '../../../constants/constants';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
+import ListIcon from '@mui/icons-material/List';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import HistoryIcon from '@mui/icons-material/History';
@@ -37,6 +38,12 @@ const NavBar = (props) => {
             <DashboardIcon /> Dashboard
           </Typography>
           <Typography
+            className={`nav-link ${selectedTab == 'menuItems' ? "selected-link" : ""}`}
+            onClick={() => history.push('/menuItems')}
+          >
+            <ListIcon /> Menu Items
+          </Typography>
+          <Typography
             className={`nav-link ${selectedTab == 'requests' ? "selected-link" : ""}`}
             onClick={() => history.push('/requests')}
           >
@@ -59,7 +66,8 @@ const NavBar = (props) => {
           </Typography>
         </Box>
       </Box>
-      <Box className='content-wrapper'>
+      <Box display="flex" flexDirection="column" className='content-wrapper'>
+        {/* <Typography className='page-title'>{selectedTab}</Typography> */}
         {props.children}
       </Box>
     </Box>

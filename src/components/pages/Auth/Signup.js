@@ -28,7 +28,7 @@ const Signup = () => {
     city: '',
     street: '',
     zip: '',
-    imageUrl: ''
+    image: null
   }
   let defaultErrors = {
     name: '',
@@ -37,8 +37,7 @@ const Signup = () => {
     email: '',
     city: '',
     street: '',
-    zip: '',
-    imageUrl: ''
+    zip: ''
   }
 
   const [input, setInput] = useState(defaultInput);
@@ -58,7 +57,7 @@ const Signup = () => {
       delete testInput.city;
       delete testInput.street;
       delete testInput.zip;
-      delete testInput.imageUrl;
+      delete testInput.image;
     }
     testInput.imageUrl = "https://as1.ftcdn.net/v2/jpg/02/96/91/42/1000_F_296914204_8F0EmCJh8nVo7c0MYJtwUdEqnG1xs6Bq.jpg"
     const updatedErrors = validate(testInput);
@@ -76,11 +75,20 @@ const Signup = () => {
     try {
       if (params.type === USER) {
         const resp = await UserSignup(payload);
-        dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER }));
+        dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
-        const resp = await RestaurantSignup(payload);
-        dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT }));
+        let formData = new FormData();
+        formData.append('name', input.name)
+        formData.append('password', input.password)
+        formData.append('email', input.email)
+        formData.append('city', input.city)
+        formData.append('street', input.street)
+        formData.append('zip', input.zip)
+        formData.append('image', input.image);
+
+        const resp = await RestaurantSignup(formData);
+        dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }
     } catch (err) {
@@ -90,23 +98,12 @@ const Signup = () => {
 
   const onFileChange = (e) => {
     const file = e.target.files[0];
-    console.log("file change", file);
-    console.log(URL.createObjectURL(file));
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function () {
-      // convert image file to base64 string
-      console.log(reader.result);
-    }, false);
-
-    if (file) {
-      reader.readAsDataURL(file);
-    }
+    setInput({ ...input, image: file });
   }
 
   return (
     <Header page="signup">
-      <Box className="auth-container">
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="auth-container" >
         <Typography className="title">{params.type === USER ? 'Customer Registration' : 'Restaurant Registration'}</Typography>
         <Box className="form-inputs" display="flex" justifyContent="space-around" alignItems="center" minWidth="50%">
           <Box display="flex" flexDirection="column" justifyContent="space-between" alignItems="center">

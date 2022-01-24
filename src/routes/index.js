@@ -13,6 +13,8 @@ const RestaurantHome = React.lazy(() => import('../components/pages/RestaurantHo
 const Requests = React.lazy(() => import('../components/pages/Requests/requests'))
 const Scheduled = React.lazy(() => import('../components/pages/Scheduled/scheduled'))
 const History = React.lazy(() => import('../components/pages/History/history'))
+const MenuItems = React.lazy(() => import('../components/pages/MenuItems/MenuItems'))
+const Orders = React.lazy(() => import('../components/pages/Orders/Orders'))
 
 const AppRouter = () => {
   const user = useSelector((state) => state.user);
@@ -36,11 +38,16 @@ const AppRouter = () => {
             path="/dashboard/:type"
             component={Dashboard}
           />
-          <PrivateRoute
+          <Route
             exact
             path="/Restaurant/:id"
             component={RestaurantHome}
-            isAuthenticated={isAuthenticated && user?.userType == USER}
+          />
+          <PrivateRoute
+            exact
+            path="/menuItems"
+            component={MenuItems}
+            isAuthenticated={isAuthenticated && user?.userType == RESTAURANT}
           />
           <PrivateRoute
             exact
@@ -59,6 +66,12 @@ const AppRouter = () => {
             path="/history"
             component={History}
             isAuthenticated={isAuthenticated && user?.userType == RESTAURANT}
+          />
+          <PrivateRoute
+            exact
+            path="/orders"
+            component={Orders}
+            isAuthenticated={isAuthenticated && user?.userType == USER}
           />
           <Route
             exact

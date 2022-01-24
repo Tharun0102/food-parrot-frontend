@@ -47,4 +47,15 @@
 .content-wrapper{
   position: absolute;
   left: 320px;
+  width: calc(100% - 320px);
+  height: 100%;
+  .page-title{
+      font-family: Poppins;
+      font-size: 20px;
+      font-weight: 600;
+      color: #3D3D3D;
+      padding: 10px 0;
+      border-bottom: 1px solid #3D3D3D;
+      text-align: left;
+  }
 }

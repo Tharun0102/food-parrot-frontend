@@ -1,15 +1,8 @@
 .restaurant-home{
   width: 800px;
-  .noData-container{
-      width: 800px;
-      margin: 0 auto;
-      .empty-list-icon{
-        height: 80px;
-        width: 80px;
-        margin-bottom: 10px;
-      }
-      .empty-text{
-        font-family: Poppins;
-      }
-    }
+  .menuItems-list{
+    max-width: 780px; 
+    margin: 0 auto;
+    padding-left: 20px;
+  }
 }
