@@ -52,7 +52,6 @@ const UserDashboard = () => {
               value={input.name}
               onChange={(e) => setInput(e.target.value)}
               onKeyPress={handleKeypress}
-              onBlur={handleSearch}
             />
             <Button variant="contained" className="search-btn" onClick={handleSearch}>Search</Button>
           </Box>

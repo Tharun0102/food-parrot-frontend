@@ -15,6 +15,7 @@ const Scheduled = React.lazy(() => import('../components/pages/Scheduled/schedul
 const History = React.lazy(() => import('../components/pages/History/history'))
 const MenuItems = React.lazy(() => import('../components/pages/MenuItems/MenuItems'))
 const Orders = React.lazy(() => import('../components/pages/Orders/Orders'))
+const Profile = React.lazy(() => import('../components/pages/Profile/Profile'))
 
 const AppRouter = () => {
   const user = useSelector((state) => state.user);
@@ -72,6 +73,12 @@ const AppRouter = () => {
             path="/orders"
             component={Orders}
             isAuthenticated={isAuthenticated && user?.userType == USER}
+          />
+          <PrivateRoute
+            exact
+            path="/profile"
+            component={Profile}
+            isAuthenticated={isAuthenticated}
           />
           <Route
             exact

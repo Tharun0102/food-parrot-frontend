@@ -5,21 +5,36 @@
         flex: 1;
         .company-name {
             font-weight: bold;
-            color: #FAB62B;
+            color: #FF406B;
             font-size: 3rem;
         }
         .tag {
+            font-size: 17px;
             color: #D7591A;
         }
         .home-footer {
             .user-btn {
-                background-color: #FAB62B;
+                background-color: #FF406B;
                 border-radius: 6px;
                 font-size: 1rem;
             }
         }
     }
     .home-image-wrapper{
-        flex:1
+        flex:1;
+        transition: all .5s;
+        animation: bike 2s ease-in-out;
+        margin-right: 50px;
+    }
+}
+
+@keyframes bike {
+    from{
+        transform: translateX(50px);
+        opacity: .3;
+    }
+    to{
+        transform: translateX(0);
+        opacity: 1;
     }
 }

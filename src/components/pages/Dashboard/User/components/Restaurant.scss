@@ -1,4 +1,6 @@
 .restaurant-card{
+  transition: all .5s;
+  animation: fade-enter 2s;
   .card-image-component{
     width: 270px;
     height: 230px;
@@ -7,5 +9,16 @@
   &:hover{
     transform: scale(1.01);
     box-shadow: 7px 7px 10px #e5e5e5 ;
+  }
+}
+
+@keyframes fade-enter {
+  from{
+    transform: translateY(-10px);
+    opacity: 0.1;
+  }
+  to{
+    transform: translateY(0px);
+    opacity: 1;
   }
 }

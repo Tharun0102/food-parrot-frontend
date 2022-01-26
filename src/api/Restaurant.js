@@ -27,6 +27,25 @@ export const getRestaurant = async (restaurantId) => {
   }
 }
 
+export const editRestaurant = async (payload, restaurantId, token) => {
+  try {
+    const resp = await axios.post(`${BASE_URL}/restaurant/${restaurantId}`,
+      payload,
+      {
+        headers: {
+          'x-auth-token': token
+        }
+      })
+    if (resp.status === 200) {
+      return resp;
+    } else {
+      throw Error(resp.data.error || "something went wrong!");
+    }
+  } catch (err) {
+    throw Error(err.message || "something went wrong!");
+  }
+}
+
 export const getMenuItems = async (restaurantId) => {
   try {
     const resp = await axios.get(`${BASE_URL}/restaurant/${restaurantId}/all`)

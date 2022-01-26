@@ -11,7 +11,8 @@
     height: 60px;
     width: 100%;
     padding: 2rem;
-    background-color: rgb(195, 202, 200);
+    box-shadow: 0 5px 10px #f0efefee;
+    background-color: #FFFFFF;
     .header-left{
       .back-btn{
         height: 50px;
@@ -19,12 +20,30 @@
         cursor: pointer;
       }
       .header-logo{
+        display: flex;
+        align-items: center;
+        .app-logo{
+          width: 30px;
+          height: 30px;
+          margin-right: 5px;
+          margin-bottom: 5px;
+        }
         cursor: pointer;
       }
     }
     .header-right{
       .auth-btn{
         color:#3D3D3D;
+      }
+      .header-item{
+        margin-right: 10px;
+      }
+      .header-btn{
+        cursor: pointer;
+        color: #123FBC;
+        &:hover{
+          transform: scale(1.03);
+        }
       }
     }
   }

@@ -22,10 +22,10 @@ const Welcome = () => {
         <Box display="flex" flexDirection="column" gap="30px" className="company">
           <Box display="flex" flexDirection="column" alignItems="center">
             <Typography className="company-name" >
-              <i><span>INSTAFOOD</span></i>
+              <i><span>FOOD PARROT</span></i>
             </Typography>
             <Typography className="tag">
-              Order now & Get your favourite food instantly.
+              Order now & Get your favourite food delivered instantly.
             </Typography>
           </Box>
           <Box display="flex" justifyContent="center" gap="20px" className="home-footer">

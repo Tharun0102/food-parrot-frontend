@@ -14,6 +14,7 @@ import './style.scss';
 import { RestaurantLogin, UserLogin } from '../../../api/auth';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { useDispatch } from 'react-redux';
+import { CircularProgress } from '@mui/material';
 
 const Login = () => {
 
@@ -33,6 +34,7 @@ const Login = () => {
   }
   const [input, setInput] = useState(defaultInput);
   const [errors, setErrors] = useState(defaultErrors);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (params.type !== USER && params.type !== RESTAURANT) {
@@ -50,29 +52,29 @@ const Login = () => {
     setErrors(updatedErrors);
     if (!isValid) return;
     //login
+    setLoading(true);
     let payload = { ...input };
     try {
       if (params.type === USER) {
         const resp = await UserLogin(payload);
+        setLoading(false);
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
         const resp = await RestaurantLogin(payload);
+        setLoading(false);
         console.log(resp, resp.headers, resp.headers['x-auth-token']);
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }
     } catch (err) {
+      setLoading(false);
       alert(err.message);
     }
   }
 
-  const handleSuccess = async (res) => {
-    console.log("success", res);
-  }
-
-  const handleFailure = async (res) => {
-    console.log("fail", res);
+  const goToSignupPage = () => {
+    history.push(`/signup/${params.type}`)
   }
 
   return (
@@ -114,9 +116,11 @@ const Login = () => {
           color="primary"
           className="submit-btn"
           onClick={handleSubmit}
+          disabled={loading}
         >
-          Login
+          {loading ? <CircularProgress size={20} /> : "Login"}
         </Button>
+        <Typography className="alternate-text">Don't have an account yet? <span className='special-link' onClick={goToSignupPage}>Signup</span></Typography>
         {/* <Typography className="text">OR</Typography>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_CLIENTID}

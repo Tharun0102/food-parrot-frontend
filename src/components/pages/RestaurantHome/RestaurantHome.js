@@ -15,6 +15,9 @@ const RestaurantHome = () => {
   const params = useParams();
 
   const [data, setData] = useState({});
+  const restaurantImageUrl = data?.imageUrl?.split("\\");
+  const restaurantImg = restaurantImageUrl && `http://localhost:5000/${restaurantImageUrl[0]}/${restaurantImageUrl[1]}`;
+  console.log("restaurantImg", restaurantImg);
   const [menuItems, setMenuItems] = useState([]);
   const [fetching, setFetching] = useState(false);
 
@@ -50,10 +53,18 @@ const RestaurantHome = () => {
             </If>
             <If condition={!fetching}>
               <Box display="flex" flexDirection="column" alignItems="center">
-                <Typography>{data?.name || "Restaurant Name"}</Typography>
+                <Box display="flex" flexDirection="column" className='restaurant-details'>
+                  <img src={restaurantImg} className='restaurant-logo' />
+                  <Box className='details-wrapper'>
+                    <Typography className='name'>{data?.name}</Typography>
+                    <Typography className='description'>{data?.desription || "No Description available!"}</Typography>
+                    <Typography className='address'>{data?.address?.street + ", " + data?.address?.city + ", " + data?.address?.zip}</Typography>
+                  </Box>
+                </Box>
+                <Typography className='menuItems-title'>Menu Items</Typography>
                 {
                   menuItems.length > 0 &&
-                  <Box display="flex" gap="20px" alignItems="center" flexWrap="wrap" className="menuItems-list">
+                  <Box display="flex" gap="20px" justifyContent="center" alignItems="center" flexWrap="wrap" className="menuItems-list">
                     {
                       menuItems.map((item, index) => {
                         return <MenuItem data={item} restaurantName={data?.name} />

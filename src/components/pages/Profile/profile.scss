@@ -1,0 +1,48 @@
+.profile-page-wrapper{
+  width: 500px;
+  margin: 0 auto;
+  .profile-header{
+    width: 100%;
+    border-bottom: 2px solid #3D3D3D;
+    margin: 30px 0 15px 0;
+    .page-title{
+      font-size: 20px;
+    }
+    .edit-icon{
+      cursor: pointer;
+    }
+    .color-blue{
+      color: #123FBC;
+    }
+  }
+  .profile-content{
+    .profile-img-wrapper{
+      .profile-text{
+
+      }
+      .profile-img{
+        width: 100px;
+        height: 100px;
+        border-radius: 50%;
+        border: 1px solid #3D3D3D;
+        font-size: 18px;
+        color: green;
+      }
+    }
+    .input-container{
+      .input-field{
+        width: 500px;
+      }
+    }
+  }
+  .profile-footer{
+    margin-top: 20px;
+    width: 500px;
+    .submit-btn{
+  
+    }
+    .disabled-btn{
+      color: #FFFFFF;
+    }
+  }
+}

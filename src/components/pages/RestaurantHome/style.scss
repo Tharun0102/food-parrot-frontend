@@ -1,8 +1,58 @@
 .restaurant-home{
   width: 800px;
+  .restaurant-details{
+    border-left: 5px solid #3D3D3D;
+    border-bottom: 5px solid #3D3D3D;
+    margin: 10px 0 20px 30px;
+    .restaurant-logo{
+      width: 80%;
+      border-radius: 8px;
+      margin: 10px auto;
+      transition: all .5s;
+      animation: fade-enter 2s;
+    }
+    .details-wrapper{
+      width: 80%;
+      margin: 0 auto 20px auto;
+      text-align: left;
+      .name{
+        font-family: Poppins;
+        font-size: 24px;
+        font-weight: 600;
+      }
+      .description{
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 500;
+      }
+      .address{
+        font-family: Poppins;
+        font-size: 16px;
+        font-weight: 500;
+      }
+    }
+  }
+  .menuItems-title{
+    font-family: Poppins;
+    font-size: 18px;
+    font-weight: 500;
+    color: #123FBC;
+    border-bottom: 2px solid #3D3D3D;
+    margin-bottom: 20px;
+  }
   .menuItems-list{
-    max-width: 780px; 
     margin: 0 auto;
     padding-left: 20px;
+  }
+}
+
+@keyframes fade-enter {
+  from{
+    transform: translateY(-10px);
+    opacity: 0.1;
+  }
+  to{
+    transform: translateY(0px);
+    opacity: 1;
   }
 }

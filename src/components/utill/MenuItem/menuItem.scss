@@ -3,6 +3,11 @@
   width: 370px;
   padding: .5rem .3rem;
   border: 1px solid #3D3D3D;
+  border-radius: 6px;
+  transition: all .3s;
+  &:hover{
+    transform: scale(1.03);
+  }
   .item-img{
     width: 100px;
     height: 100px;

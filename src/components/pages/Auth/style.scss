@@ -30,6 +30,16 @@
     padding:.5rem;
     margin-bottom: .5rem;
   }
+  .alternate-text{
+    margin: 5px 0;
+    .special-link{
+      color: #123FBC;
+      cursor: pointer;
+      &:focus, &:hover{
+        text-decoration: underline;
+      }
+    }
+  }
   .text{
     color:#FFFFFF;
   }

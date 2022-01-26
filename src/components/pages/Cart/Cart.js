@@ -10,11 +10,13 @@ import CustomModal from '../../utill/Modal/Modal';
 import { ClearCart } from '../../../store/actions/Cart';
 import { createOrder } from '../../../api/Order';
 import { FormControl, Input, InputLabel } from '@mui/material';
+import { useHistory } from 'react-router-dom';
 
 const Cart = () => {
   const user = useSelector((state) => state.user);
   const cart = useSelector((state) => state.cart);
   const dispatch = useDispatch();
+  const history = useHistory();
   const itemList = cart || [];
   const [total, setTotal] = useState(0);
   const [orderModal, setOrderModal] = useState(false);
@@ -46,6 +48,7 @@ const Cart = () => {
       return;
     }
     if (!user._id || !user.token) {
+      history.push('/login/User')
       alert("login to place an order!");
       return;
     }
@@ -63,6 +66,7 @@ const Cart = () => {
     }
     try {
       await createOrder(payload);
+      setOrderModal(false);
       alert("order placed!")
     } catch (err) {
       alert(err.message);
@@ -112,21 +116,13 @@ const Cart = () => {
           </FormControl>
           <Typography>Payment Mode: Cash On Delivery</Typography>
           <Typography>Total: {total || 0}</Typography>
-          <Box>
-            <Button
-              onClick={() => setOrderModal(false)}
-            >
-              Cancel
-            </Button>
-            <Button
-              onClick={placeOrder}
-            >
-              Confirm
-            </Button>
+          <Box display="flex" gap="20px" justifyContent='center' className='modal-footer'>
+            <Button variant="outlined" className='cancel-btn' onClick={() => setOrderModal(false)}>Cancel</Button>
+            <Button variant="contained" color='primary' className='confirm-btn' onClick={placeOrder}>Confirm</Button>
           </Box>
         </Box>
       </CustomModal>
-      <Typography className="title">Cart</Typography>
+      <Typography className="title">My Cart</Typography>
       {itemList?.length > 0 &&
         <Typography className="sub-title">Restaurant: {itemList[0].Restaurant}</Typography>
       }
@@ -152,21 +148,16 @@ const Cart = () => {
       <Box className="cart-footer">
         <Typography className="total-text">Total: {total || 0}</Typography>
         <Box display="flex" gap="20px" marginTop="10px">
-          <Button
-            variant="outlined"
-            onClick={clearCart}
-            className="cancel-btn"
-          >
-            Clear Cart
-          </Button>
-          <Button
-            variant="contained"
-            onClick={handleOrder}
-            className="confirm-btn"
-          >
-            Place Order
-          </Button>
+          <Button variant="outlined" className='cancel-btn' onClick={clearCart}>Clear Cart</Button>
+          <Button variant="contained" color='primary' className='confirm-btn' onClick={handleOrder}>Place Order</Button>
         </Box>
+      </Box>
+      <Box display="flex">
+        <span className='bubble'></span>
+        <span className='bubble'></span>
+        <span className='bubble'></span>
+        <span className='bubble'></span>
+        <span className='bubble'></span>
       </Box>
     </Box>
   )

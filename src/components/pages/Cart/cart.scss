@@ -1,11 +1,18 @@
 .cart-container{
   margin:30px;
-  border: 1px solid #3d3d3d;
+  border: 2px solid #3d3d3d;
+  border-radius: 6px;
   flex-grow: 0;
   width: 450px;
   height: fit-content;
   .title{
-
+    font-family: sans-serif;
+    letter-spacing: .05em;
+    font-size: 18px;
+    font-weight: 500;
+    color: #123FBC;
+    border-bottom: 2px solid #3D3D3D;
+    margin-bottom: 20px;
   }
   .sub-title{
     text-align: left;
@@ -27,11 +34,61 @@
       padding: 5px 10px;
     }
   }
+  .bubble{
+    width: 15px;
+    height: 15px;
+    border: 1px solid #3d3d3d;
+    border-radius: 50%;
+    transition: all .5s;
+    // animation: bubbles 2s ease infinite;
+    opacity: 0;
+  }
 }
 .order-modal{
   width: 450px;
   .item-input{
     width: 400px;
     margin-bottom: 10px;
+  }
+}
+
+@keyframes bubbles {
+  to{
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  from{
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+@keyframes animateSprite {
+  0% {
+    background-position: -600px; /* Starting position moving left sprite */
+  }
+  20% {
+    background-position: 0px; /* Straight on sprite */
+  }
+  25% {
+    background-position: -200px; /* Moving up sprite */
+  }
+  35% {
+    background-position: -400px; /* Moving right sprite */
+  }
+  40% {
+    background-position: -400px;
+  }
+  50% {
+    background-position: -200px;  /* Moving up sprite */
+  }
+  60% {
+    background-position: -0px; /* Straight on sprite */
+  }
+  67% {
+    background-position: -600px; /* Moving up sprite */
+  }
+
+  100% {
+    background-position: -600px;
   }
 }

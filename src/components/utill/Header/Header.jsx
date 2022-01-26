@@ -31,12 +31,12 @@ const Header = (props) => {
       }
   },[window.location])
 
-  const handleSubmit = ()=>{
-    if(page==='signup'){
-      history.push(`/login/${params.type || USER}`)
-    }else{
-      history.push(`/signup/${params.type || USER}`)
-    }
+  const handleRegisterClick = ()=>{
+    history.push(`/signup/${user?.userType|| USER}`)
+  }
+
+  const handleLoginClick = ()=>{
+    history.push(`/login/${user?.userType|| USER}`)
   }
 
   const handleOrders = () => {
@@ -66,27 +66,24 @@ const Header = (props) => {
               </IconButton> 
             }
           </If>
-          <Typography className="header-logo" onClick={goToHome}>INSTAFOOD</Typography>
+          <Typography className="header-logo" onClick={goToHome}> <img src="/app-logo.png" className='app-logo'/>FOOD PARROT</Typography>
         </Box>
         <Box display="flex" alignItems="center" className="header-right">
-          <If condition={isLogged && user?.userType==USER}>
-            <Typography>Hello, {user.name}</Typography>
-            <Button onClick={handleOrders}>
+          <If condition={isLogged}>
+            {user?.userType==USER && <Typography className='header-item'>Hello, {user.name}</Typography>}
+            {user?.userType==USER && <Typography className='header-item header-btn' onClick={handleOrders}>
               Orders
-            </Button>
-            <Button onClick={handleLogout}>
+            </Typography>}
+            <Typography className='header-item header-btn' onClick={() => history.push('/profile')}>
+              Profile
+            </Typography>
+            {user?.userType==USER && <Button variant="outlined" className='logout-btn' onClick={handleLogout}>
               Logout
-            </Button>
+            </Button>}
           </If>
-          <If condition={!isLogged}>
-            <If condition={page==='signup' || page==='login'}>
-              {page==='signup' && <Button className="auth-btn" onClick={handleSubmit}>Login</Button> }
-              {page==='login' && <Button className="auth-btn" onClick={handleSubmit}>Register</Button> }
-            </If>
-            <If condition={page!=='signup' && page!=='login'}>
-              <Button className="auth-btn" onClick={handleSubmit}>Login</Button> 
-              <Button className="auth-btn" onClick={handleSubmit}>Register</Button> 
-            </If>
+          <If condition={!isLogged && page !=='login' && page!=='signup'}>
+            <Button className="auth-btn" onClick={handleLoginClick}>Login</Button> 
+            <Button className="auth-btn" onClick={handleRegisterClick}>Register</Button> 
           </If>
         </Box>
       </Box>

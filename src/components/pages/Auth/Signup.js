@@ -13,6 +13,7 @@ import './style.scss';
 import { RestaurantSignup, UserSignup } from '../../../api/auth';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { useDispatch } from 'react-redux';
+import { CircularProgress } from '@mui/material';
 
 const Signup = () => {
 
@@ -42,6 +43,7 @@ const Signup = () => {
 
   const [input, setInput] = useState(defaultInput);
   const [errors, setErrors] = useState(defaultErrors);
+  const [loading, setLoading] = useState(false);
 
 
   useEffect(() => {
@@ -70,11 +72,13 @@ const Signup = () => {
     if (!isValid) return;
 
     //signup
+    setLoading(true);
     let payload = { ...input };
     payload.imageUrl = testInput.imageUrl = "https://as1.ftcdn.net/v2/jpg/02/96/91/42/1000_F_296914204_8F0EmCJh8nVo7c0MYJtwUdEqnG1xs6Bq.jpg"
     try {
       if (params.type === USER) {
         const resp = await UserSignup(payload);
+        setLoading(false);
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
@@ -88,10 +92,12 @@ const Signup = () => {
         formData.append('image', input.image);
 
         const resp = await RestaurantSignup(formData);
+        setLoading(false);
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }
     } catch (err) {
+      setLoading(false);
       alert(err.message);
     }
   }
@@ -99,6 +105,10 @@ const Signup = () => {
   const onFileChange = (e) => {
     const file = e.target.files[0];
     setInput({ ...input, image: file });
+  }
+
+  const goToLoginPage = () => {
+    history.push(`/login/${params.type}`)
   }
 
   return (
@@ -208,9 +218,11 @@ const Signup = () => {
           color="primary"
           className="submit-btn"
           onClick={handleSubmit}
+          disabled={loading}
         >
-          Register
+          {loading ? <CircularProgress size={20} /> : "Register"}
         </Button>
+        <Typography className="alternate-text">Already have an account? <span className='special-link' onClick={goToLoginPage}>Login</span></Typography>
         {/* <Typography className="text">OR</Typography>
         <GoogleLogin
           clientId={process.env.REACT_APP_GOOGLE_CLIENTID}
