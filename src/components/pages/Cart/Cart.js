@@ -25,6 +25,7 @@ const Cart = () => {
     street: '',
     city: ''
   })
+  const [mobile, setMobile] = useState('')
 
   useEffect(() => {
     let newTotal = 0;
@@ -52,8 +53,12 @@ const Cart = () => {
       alert("login to place an order!");
       return;
     }
-    if (address.houseNo.length === 0 || address.street === 0 || address.city === 0) {
+    if (address.houseNo.length === 0 || address.street.length === 0 || address.city.length === 0) {
       alert("address required!");
+      return;
+    }
+    if (mobile.length === 0) {
+      alert("mobile number required!");
       return;
     }
     const payload = {
@@ -62,12 +67,14 @@ const Cart = () => {
       items: cart,
       order_status: 'Placed',
       address,
+      mobile,
       token: user.token
     }
     try {
       await createOrder(payload);
       setOrderModal(false);
       alert("order placed!")
+      history.push('/orders');
     } catch (err) {
       alert(err.message);
     }
@@ -112,6 +119,15 @@ const Cart = () => {
               type='text'
               value={address.city}
               onChange={(e) => handleChange(e, 'city')}
+            />
+          </FormControl>
+          <FormControl fullWidth className='item-input' variant="standard">
+            <InputLabel htmlFor="mobile">Mobile No</InputLabel>
+            <Input
+              id='mobile'
+              type='text'
+              value={mobile}
+              onChange={(e) => setMobile(e.target.value)}
             />
           </FormControl>
           <Typography>Payment Mode: Cash On Delivery</Typography>

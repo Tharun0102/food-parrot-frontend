@@ -69,17 +69,17 @@ const Header = (props) => {
           <Typography className="header-logo" onClick={goToHome}> <img src="/app-logo.png" className='app-logo'/>FOOD PARROT</Typography>
         </Box>
         <Box display="flex" alignItems="center" className="header-right">
-          <If condition={isLogged}>
-            {user?.userType==USER && <Typography className='header-item'>Hello, {user.name}</Typography>}
-            {user?.userType==USER && <Typography className='header-item header-btn' onClick={handleOrders}>
+          <If condition={isLogged && user?.userType==USER}>
+            <Typography className='header-item'>Hello, {user.name}</Typography>
+            <Typography className='header-item header-btn' onClick={handleOrders}>
               Orders
-            </Typography>}
+            </Typography>
             <Typography className='header-item header-btn' onClick={() => history.push('/profile')}>
               Profile
             </Typography>
-            {user?.userType==USER && <Button variant="outlined" className='logout-btn' onClick={handleLogout}>
+            <Button variant="outlined" className='logout-btn' onClick={handleLogout}>
               Logout
-            </Button>}
+            </Button>
           </If>
           <If condition={!isLogged && page !=='login' && page!=='signup'}>
             <Button className="auth-btn" onClick={handleLoginClick}>Login</Button> 

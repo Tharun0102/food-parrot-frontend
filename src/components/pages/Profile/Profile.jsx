@@ -14,6 +14,7 @@ import { editRestaurant } from '../../../api/Restaurant';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { editUser } from '../../../api/User';
 import { CircularProgress } from '@mui/material';
+import NavBar from '../../utill/NavBar/NavBar';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -40,7 +41,7 @@ const Profile = () => {
       return;
     }
     if(input.city.length <2 || input.city.length >25){
-      alert("city must be b/w 2 and 20 letters");
+      alert("city must be b/w 2 and 25 letters");
       return;
     }
     if(input.street.length <2 || input.street.length >25){
@@ -93,11 +94,11 @@ const Profile = () => {
     setInput({ ...input, image: file });
   }
 
-  return (
-    <Header>
+  const profileSection = () => {
+    return (
       <Box display="flex" flexDirection="column" alignItems="flex-start" className='profile-page-wrapper'>
-        <Box display="flex" justifyContent="space-between" className='profile-header'>
-          <Typography className='page-title'>My Profile</Typography>
+        <Box display="flex" justifyContent="space-between" alignItems="center" className='profile-header'>
+          <Typography style={{border: 'none'}} className='page-title'>My Profile</Typography>
           <Tooltip title="Edit" placement="right">
             <div className={editing ? "edit-icon color-blue" : "edit-icon"} onClick={() => setEditing(true)}>
                 <EditIcon />
@@ -183,6 +184,15 @@ const Profile = () => {
           <Button variant="contained" color='primary' disabled={!editing || loading} className={(!editing || loading) ? "disabled-btn confirm-btn": 'submit-btn confirm-btn'} onClick={handleSubmit}>{loading ? <CircularProgress size={20}/> : "Update"}</Button>
         </Box>
       </Box>
+    )
+  }
+
+  return (
+    <Header>
+      {
+        user?.userType == USER ? profileSection()
+        : <NavBar tab='profile'>{profileSection()}</NavBar>
+      }
     </Header>
   );
 };

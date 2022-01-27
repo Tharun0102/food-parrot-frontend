@@ -45,10 +45,16 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
   }
 
   const handleSubmit = async () => {
-    if (input.name.length < 2 || input?.name.length > 15) {
-      alert("name must be b/w 2 and 15 chars");
+    if (input.name.length < 2 || input?.name.length > 25) {
+      alert("name must be b/w 2 and 25 chars");
       return;
     }
+    if (input.description.length < 2 || input?.description.length > 25) {
+      alert("description must be b/w 2 and 25 chars");
+      return;
+    }
+
+
 
     const payload = new FormData();
     input.image && payload.append("image", input.image);

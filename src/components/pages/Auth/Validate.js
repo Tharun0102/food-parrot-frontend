@@ -29,8 +29,8 @@ const validateText = (value, type) => {
   if (value.trim() === '') {
     return `${type} is required`;
   }
-  if (value.length < 3 || value.length > 16) {
-    return `${type} must be between 3 and 16 character`;
+  if (value.length < 3 || value.length > 25) {
+    return `${type} must be between 3 and 25 character`;
   }
   return "";
 }
@@ -58,8 +58,8 @@ const validatePassword = (password) => {
   if (password.trim() === '') {
     return "password is required";
   }
-  if (password.length < 3 || password.length > 16) {
-    return 'password must be between 3 and 16 characters';
+  if (password.length < 3 || password.length > 20) {
+    return 'password must be between 3 and 20 characters';
   }
   return "";
 }

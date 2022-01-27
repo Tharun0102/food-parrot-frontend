@@ -34,7 +34,7 @@ const Restaurant = ({ data }) => {
           {data.address.street},{data.address.city}
         </Typography>
         <Box className="rating-container">
-          <Rating name="half-rating" value={data?.rating || 0} precision={0.1} readOnly />
+          <Rating name="half-rating" value={data?.rating || 0} precision={1} readOnly />
           <Typography>({data?.ratingsCount || 0} ratings)</Typography>
         </Box>
       </CardContent>

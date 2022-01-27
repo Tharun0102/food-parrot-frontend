@@ -7,6 +7,7 @@ import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/U
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ListIcon from '@mui/icons-material/List';
+import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
 import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import HistoryIcon from '@mui/icons-material/History';
@@ -44,22 +45,16 @@ const NavBar = (props) => {
             <ListIcon /> Menu Items
           </Typography>
           <Typography
-            className={`nav-link ${selectedTab == 'requests' ? "selected-link" : ""}`}
-            onClick={() => history.push('/requests')}
+            className={`nav-link ${selectedTab == 'orders' ? "selected-link" : ""}`}
+            onClick={() => history.push('/orders')}
           >
-            <AssignmentIndOutlinedIcon /> Requests
+            <HistoryIcon /> Orders
           </Typography>
           <Typography
-            className={`nav-link ${selectedTab == 'scheduled' ? "selected-link" : ""}`}
-            onClick={() => history.push('/scheduled')}
+            className={`nav-link ${selectedTab == 'profile' ? "selected-link" : ""}`}
+            onClick={() => history.push('/profile')}
           >
-            <ScheduleIcon /> Scheduled
-          </Typography>
-          <Typography
-            className={`nav-link ${selectedTab == 'history' ? "selected-link" : ""}`}
-            onClick={() => history.push('/history')}
-          >
-            <HistoryIcon /> History
+            <AccountBoxOutlinedIcon /> Profile
           </Typography>
           <Typography className='nav-link logout' onClick={handleLogout}>
             <LogoutIcon /> Logout

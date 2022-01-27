@@ -56,10 +56,11 @@ const MenuItem = ({ data, restaurantName, cartItem, isRestaurant, handleDeleteIt
       <img src={imageUrl || '#'} alt="item-img" className="item-img" />
       <Box className="item-content" display="flex" flexDirection="column" justifyContent="space-between" alignItems="flex-start">
         <Typography>{data?.name || '--'}</Typography>
-        <Box display="flex" flexDirection="column" justifyContent="flex-start">
+        <Typography>{data?.description || 'No Description available!'}</Typography>
+        {/* <Box display="flex" flexDirection="column" justifyContent="flex-start">
           <Rating name="half-rating" value={data?.rating || 0} precision={0.1} readOnly />
           <Typography>({data?.ratingsCount || 0} ratings)</Typography>
-        </Box>
+        </Box> */}
         <Typography>₹{data?.price || '--'}</Typography>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" className="item-options">

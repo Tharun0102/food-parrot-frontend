@@ -14,9 +14,9 @@ export const createOrder = async (payload) => {
   }
 }
 
-export const editOrder = async (payload) => {
+export const editOrder = async (payload, orderId, token) => {
   try {
-    const resp = await axios.post(`${BASE_URL}/order/edit`, payload, { headers: { 'x-auth-token': payload.token } })
+    const resp = await axios.post(`${BASE_URL}/order/${orderId}`, payload, { headers: { 'x-auth-token': token } })
     if (resp.status === 200) {
       return resp?.data;
     } else {

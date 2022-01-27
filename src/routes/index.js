@@ -10,9 +10,6 @@ const Login = React.lazy(() => import('../components/pages/Auth/Login.js'))
 const Signup = React.lazy(() => import('../components/pages/Auth/Signup.js'))
 const Dashboard = React.lazy(() => import('../components/pages/Dashboard/index'))
 const RestaurantHome = React.lazy(() => import('../components/pages/RestaurantHome/RestaurantHome'))
-const Requests = React.lazy(() => import('../components/pages/Requests/requests'))
-const Scheduled = React.lazy(() => import('../components/pages/Scheduled/scheduled'))
-const History = React.lazy(() => import('../components/pages/History/history'))
 const MenuItems = React.lazy(() => import('../components/pages/MenuItems/MenuItems'))
 const Orders = React.lazy(() => import('../components/pages/Orders/Orders'))
 const Profile = React.lazy(() => import('../components/pages/Profile/Profile'))
@@ -52,18 +49,6 @@ const AppRouter = () => {
           />
           <PrivateRoute
             exact
-            path="/requests"
-            component={Requests}
-            isAuthenticated={isAuthenticated && user?.userType == RESTAURANT}
-          />
-          <PrivateRoute
-            exact
-            path="/scheduled"
-            component={Scheduled}
-            isAuthenticated={isAuthenticated && user?.userType == RESTAURANT}
-          />
-          <PrivateRoute
-            exact
             path="/history"
             component={History}
             isAuthenticated={isAuthenticated && user?.userType == RESTAURANT}
@@ -72,7 +57,7 @@ const AppRouter = () => {
             exact
             path="/orders"
             component={Orders}
-            isAuthenticated={isAuthenticated && user?.userType == USER}
+            isAuthenticated={isAuthenticated}
           />
           <PrivateRoute
             exact
