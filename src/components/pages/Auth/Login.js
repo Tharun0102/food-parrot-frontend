@@ -8,13 +8,14 @@ import { useParams } from 'react-router-dom';
 import TextField from '@mui/material/TextField';
 import Header from '../../utill/Header/Header';
 import { GoogleLogin } from 'react-google-login';
-import { USER, RESTAURANT } from '../../../constants/constants';
+import { USER, RESTAURANT } from '../../../common/constants';
+import { toast } from 'react-toastify';
 
 import './style.scss';
 import { RestaurantLogin, UserLogin } from '../../../api/auth';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { useDispatch } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Login = () => {
 
@@ -57,11 +58,13 @@ const Login = () => {
     try {
       if (params.type === USER) {
         const resp = await UserLogin(payload);
+        toast.success("login successful!")
         setLoading(false);
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
         const resp = await RestaurantLogin(payload);
+        toast.success("login successful!")
         setLoading(false);
         console.log(resp, resp.headers, resp.headers['x-auth-token']);
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
@@ -69,7 +72,7 @@ const Login = () => {
       }
     } catch (err) {
       setLoading(false);
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 

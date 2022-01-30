@@ -1,4 +1,4 @@
-import { LOGOUT, UPDATE_CLIENT, UPDATE_RESTAURANT } from '../../constants/constants';
+import { LOGOUT, UPDATE_CLIENT, UPDATE_RESTAURANT } from '../../common/constants';
 const InitialState = {}
 
 const userReducer = (state = InitialState, action) => {

@@ -1,5 +1,6 @@
 import axios from "axios";
-import { BASE_URL } from '../constants/constants';
+import { BASE_URL } from '../common/constants';
+import { errorHandler } from "./common";
 
 export const createOrder = async (payload) => {
   try {
@@ -10,7 +11,7 @@ export const createOrder = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -23,7 +24,7 @@ export const editOrder = async (payload, orderId, token) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -36,6 +37,6 @@ export const getAllOrders = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }

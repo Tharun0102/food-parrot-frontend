@@ -6,29 +6,42 @@ import OutlinedInput from '@mui/material/OutlinedInput';
 import emptyList from '../../../../images/empty-list.png';
 import Restaurant from './components/Restaurant';
 import CircularProgress from '@mui/material/CircularProgress';
+import Pagination from '@mui/material/Pagination';
 import './userDashboard.scss'
 import Cart from '../../Cart/Cart';
 import Header from '../../../utill/Header/Header';
 import If from '../../../utill/If/If';
 import { getAllRestaurants } from '../../../../api/Restaurant';
+import { toast } from 'react-toastify';
 
 const UserDashboard = () => {
   const [input, setInput] = useState('');
   const [restaurants, setRestaurants] = useState([]);
   const [fetching, setFetching] = useState(false);
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+  const PAGE_SIZE = 12;
+  const handleChange = (event, value) => {
+    setPage(value);
+  };
 
   useEffect(() => {
     handleSearch();
-  }, [])
+  }, [page])
 
   const handleSearch = async () => {
     setFetching(true);
     try {
-      const updatedRestaurants = await getAllRestaurants(input);
-      setRestaurants(updatedRestaurants);
+      const resp = await getAllRestaurants({
+        page,
+        limit: 12,
+        search: input
+      });
+      setTotal(resp.total)
+      setRestaurants(resp.restaurants);
       setFetching(false);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
       setFetching(false);
     }
   }
@@ -41,7 +54,7 @@ const UserDashboard = () => {
   };
 
   return (
-    <Header>
+    <Header page='dashboard'>
       <Box display="flex" className='dashboard-wrapper'>
         <Box className="user-dashboard" flexGrow="1">
           <Box className="restaurants-search">
@@ -64,13 +77,16 @@ const UserDashboard = () => {
             <If condition={!fetching}>
               {
                 restaurants?.length > 0 &&
-                <Box className="restaurants-list">
-                  {restaurants.map((item, index) =>
-                    <Restaurant
-                      key={item.id}
-                      data={item}
-                    />
-                  )}
+                <Box display="flex" flexDirection="column" alignItems="center" gap="30px">
+                  <Box className="restaurants-list">
+                    {restaurants.map((item, index) =>
+                      <Restaurant
+                        key={item.id}
+                        data={item}
+                      />
+                    )}
+                  </Box>
+                  <Pagination color='primary' count={Math.floor((total + PAGE_SIZE - 1) / PAGE_SIZE)} page={page} onChange={handleChange} />
                 </Box>
               }
               {

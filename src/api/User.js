@@ -1,5 +1,19 @@
 import axios from "axios";
-import { BASE_URL } from "../constants/constants";
+import { BASE_URL } from "../common/constants";
+import { errorHandler } from "./common";
+
+export const verifyToken = async (token) => {
+  try {
+    const resp = await axios.post(`${BASE_URL}/user/verifyToken`, { token })
+    if (resp.status === 200) {
+      return resp?.data;
+    } else {
+      return false;
+    }
+  } catch (err) {
+    return false;
+  }
+}
 
 
 export const editUser = async (payload, userId, token) => {
@@ -17,6 +31,6 @@ export const editUser = async (payload, userId, token) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }

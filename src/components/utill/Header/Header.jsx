@@ -2,34 +2,22 @@ import React, { useEffect } from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import {useDispatch, useSelector} from 'react-redux';
-import IconButton from '@mui/material/IconButton';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
-import decode from 'jwt-decode';
 import './style.scss';
 import If from '../If/If';
-import { Logout, UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
-import {  USER } from '../../../constants/constants';
+import { Logout } from '../../../store/actions/User';
+import {  USER } from '../../../common/constants';
+import { ClearCart } from '../../../store/actions/Cart';
 
 const Header = (props) => {
   const { page } = props;
   const dispatch = useDispatch();
-  const params = useParams();
   const history = useHistory();
   const user = useSelector((state) => state.user);
-  const isLogged = user?.isLogged; 
-
-  useEffect(()=>{
-      const token = user?.token;
-      if(token){
-          const decodedToken = decode(token)
-          console.log(decodedToken.exp,new Date().getTime());
-          if(decodedToken.exp*1000 < new Date().getTime()){
-            dispatch(Logout());
-          }
-      }
-  },[window.location])
+  const isLogged = user?.isLogged;   
+  const isRestaurant = user?.userType;   
 
   const handleRegisterClick = ()=>{
     history.push(`/signup/${user?.userType|| USER}`)
@@ -49,9 +37,8 @@ const Header = (props) => {
   }
   
   const handleLogout = () => {
-    const action = (user?.userType == USER) ? UpdateClientUser({}) : UpdateRestaurantUser({});
-    console.log("action",action);
-    dispatch(action);
+    dispatch(ClearCart());
+    dispatch(Logout());
     history.push('/')
   }
 
@@ -59,13 +46,11 @@ const Header = (props) => {
     <Box className='main-page'>
       <Box className="header-container">
         <Box display="flex" alignItems="center" className="header-left">
-          <If condition={!isLogged}>
-            {(page==='signup' || page==='login') &&
-              <IconButton color="primary" className="back-btn" onClick={()=>history.push('/')} component="span">
-                <ArrowBackIcon />
-              </IconButton> 
-            }
-          </If>
+          {(page !== 'dashboard' && page !== 'welcome' && isRestaurant) &&
+            <div className="back-btn" onClick={()=>history.push('/')} component="span">
+              <ArrowBackIcon />
+            </div> 
+          }
           <Typography className="header-logo" onClick={goToHome}> <img src="/app-logo.png" className='app-logo'/>FOOD PARROT</Typography>
         </Box>
         <Box display="flex" alignItems="center" className="header-right">

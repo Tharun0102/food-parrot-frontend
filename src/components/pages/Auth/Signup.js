@@ -7,13 +7,13 @@ import validate from './Validate';
 import TextField from '@mui/material/TextField';
 import Header from '../../utill/Header/Header';
 import { GoogleLogin } from 'react-google-login';
-import { USER, RESTAURANT } from '../../../constants/constants';
-
+import { USER, RESTAURANT } from '../../../common/constants';
+import { toast } from 'react-toastify';
 import './style.scss';
 import { RestaurantSignup, UserSignup } from '../../../api/auth';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { useDispatch } from 'react-redux';
-import { CircularProgress } from '@mui/material';
+import CircularProgress from '@mui/material/CircularProgress';
 
 const Signup = () => {
 
@@ -78,6 +78,7 @@ const Signup = () => {
     try {
       if (params.type === USER) {
         const resp = await UserSignup(payload);
+        toast.success("signup successful!")
         setLoading(false);
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
@@ -92,13 +93,14 @@ const Signup = () => {
         formData.append('image', input.image);
 
         const resp = await RestaurantSignup(formData);
+        toast.success("signup successful!")
         setLoading(false);
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }
     } catch (err) {
       setLoading(false);
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 

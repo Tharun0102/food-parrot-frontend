@@ -7,7 +7,7 @@ import './dashboard.scss'
 import UserDashboard from './User/UserDashboard';
 import { useSelector } from 'react-redux';
 
-import { USER_TYPE, RESTAURANT_TYPE } from '../../../constants/constants';
+import { USER_TYPE, RESTAURANT_TYPE } from '../../../common/constants';
 
 const Dashboard = () => {
   const user = useSelector((state) => state.user);

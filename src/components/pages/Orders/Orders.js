@@ -8,11 +8,12 @@ import Order from '../../utill/Order/Order';
 import emptyList from '../../../images/empty-list.png';
 import CircularProgress from '@mui/material/CircularProgress';
 import Header from '../../utill/Header/Header';
-import { USER } from '../../../constants/constants';
+import { USER } from '../../../common/constants';
 import NavBar from '../../utill/NavBar/NavBar';
 import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import './orders.scss';
+import { toast } from 'react-toastify';
 
 const Orders = () => {
   const user = useSelector(state => state.user);
@@ -39,7 +40,7 @@ const Orders = () => {
       setOrders(data);
       setFetching(false);
     } catch (err) {
-      alert("couldn't fetch orders");
+      toast.error("couldn't fetch orders", { position: toast.POSITION.TOP_CENTER });
       setFetching(false);
     }
   }

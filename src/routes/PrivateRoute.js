@@ -2,7 +2,6 @@ import React from "react";
 import { Redirect, Route } from "react-router-dom";
 
 const PrivateRoute = ({ component: Component, isAuthenticated, ...children }) => {
-  console.log('isAuthenticated', isAuthenticated, !isAuthenticated);
   if (!isAuthenticated) {
     return <Redirect to="/" />
   }

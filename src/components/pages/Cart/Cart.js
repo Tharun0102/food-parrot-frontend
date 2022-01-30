@@ -11,6 +11,7 @@ import { ClearCart } from '../../../store/actions/Cart';
 import { createOrder } from '../../../api/Order';
 import { FormControl, Input, InputLabel } from '@mui/material';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Cart = () => {
   const user = useSelector((state) => state.user);
@@ -45,20 +46,20 @@ const Cart = () => {
 
   const placeOrder = async () => {
     if (itemList.length === 0) {
-      alert("cart is empty!");
+      toast.info("cart is empty!");
       return;
     }
     if (!user._id || !user.token) {
       history.push('/login/User')
-      alert("login to place an order!");
+      toast.info("login to place an order!");
       return;
     }
     if (address.houseNo.length === 0 || address.street.length === 0 || address.city.length === 0) {
-      alert("address required!");
+      toast.error("address required!");
       return;
     }
     if (mobile.length === 0) {
-      alert("mobile number required!");
+      toast.error("mobile number required!");
       return;
     }
     const payload = {
@@ -73,10 +74,11 @@ const Cart = () => {
     try {
       await createOrder(payload);
       setOrderModal(false);
-      alert("order placed!")
+      toast.success("order placed!")
+      dispatch(ClearCart());
       history.push('/orders');
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 

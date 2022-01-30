@@ -1,19 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { useHistory } from 'react-router-dom/cjs/react-router-dom.min';
-import { Box, Typography } from '@mui/material';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
 import { useDispatch, useSelector } from 'react-redux';
-import { USER } from '../../../constants/constants';
-import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
+import { Logout } from '../../../store/actions/User';
 
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import ListIcon from '@mui/icons-material/List';
 import AccountBoxOutlinedIcon from '@mui/icons-material/AccountBoxOutlined';
-import AssignmentIndOutlinedIcon from '@mui/icons-material/AssignmentIndOutlined';
-import ScheduleIcon from '@mui/icons-material/Schedule';
 import HistoryIcon from '@mui/icons-material/History';
 import LogoutIcon from '@mui/icons-material/Logout';
 
 import './NavBar.scss';
+import { ClearCart } from '../../../store/actions/Cart';
 
 const NavBar = (props) => {
   const history = useHistory();
@@ -22,8 +21,8 @@ const NavBar = (props) => {
   const selectedTab = props.tab;
 
   const handleLogout = () => {
-    const action = (user?.userType == USER) ? UpdateClientUser({}) : UpdateRestaurantUser({});
-    dispatch(action);
+    dispatch(ClearCart());
+    dispatch(Logout());
     history.push('/');
   }
 
@@ -62,7 +61,6 @@ const NavBar = (props) => {
         </Box>
       </Box>
       <Box display="flex" flexDirection="column" className='content-wrapper'>
-        {/* <Typography className='page-title'>{selectedTab}</Typography> */}
         {props.children}
       </Box>
     </Box>

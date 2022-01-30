@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import PrivateRoute from "./PrivateRoute";
 import Loader from "../components/utill/Loader";
 import { useSelector } from "react-redux";
-import { RESTAURANT, USER } from "../constants/constants";
+import { RESTAURANT } from "../common/constants";
 
 const Welcome = React.lazy(() => import('../components/pages/Welcome/Welcome'))
 const Login = React.lazy(() => import('../components/pages/Auth/Login.js'))

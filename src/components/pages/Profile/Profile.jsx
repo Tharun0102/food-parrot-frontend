@@ -9,12 +9,13 @@ import Tooltip from '@mui/material/Tooltip';
 
 import './profile.scss';
 import { useDispatch, useSelector } from 'react-redux';
-import { RESTAURANT, USER } from '../../../constants/constants';
+import { RESTAURANT, USER } from '../../../common/constants';
 import { editRestaurant } from '../../../api/Restaurant';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
 import { editUser } from '../../../api/User';
 import { CircularProgress } from '@mui/material';
 import NavBar from '../../utill/NavBar/NavBar';
+import {toast} from 'react-toastify';
 
 const Profile = () => {
   const dispatch = useDispatch();
@@ -37,15 +38,15 @@ const Profile = () => {
 
   const handleSubmit = async () => {
     if(input.name.length <2 || input.name.length >25){
-      alert("name must be b/w 2 and 25 letters");
+      toast.error("name must be b/w 2 and 25 letters");
       return;
     }
     if(input.city.length <2 || input.city.length >25){
-      alert("city must be b/w 2 and 25 letters");
+      toast.error("city must be b/w 2 and 25 letters");
       return;
     }
     if(input.street.length <2 || input.street.length >25){
-      alert("street must be b/w 2 and 25 letters");
+      toast.error("street must be b/w 2 and 25 letters");
       return;
     }
 
@@ -66,7 +67,7 @@ const Profile = () => {
         },user?._id, user?.token);
         setLoading(false);
         setEditing(false);
-        alert("edited succesfully!")
+        toast.success("edited succesfully!")
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
       } else {
         let formData = new FormData();
@@ -80,12 +81,12 @@ const Profile = () => {
         const resp = await editRestaurant(formData, user?._id, user?.token);
         setLoading(false);
         setEditing(false);
-        alert("edited succesfully!")
+        toast.success("edited succesfully!")
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
       }
     } catch (err) {
       setLoading(false);
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 

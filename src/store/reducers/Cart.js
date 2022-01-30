@@ -2,12 +2,11 @@
 const defaultState = []
 
 const CartReducer = (state = defaultState, action) => {
-  console.log("cart reducer", action);
   const newState = [...state];
   const item = action.payload;
   switch (action.type) {
     case 'ADD_ITEM':
-      if (newState.length === 0 || newState[0].Restaurant !== item.Restaurant) {
+      if (newState.length === 0 || newState[0].restaurantId !== item.restaurantId) {
         return [{ ...item, count: 1 }];
       }
       const listItem = newState.find((e) => e._id === item._id);

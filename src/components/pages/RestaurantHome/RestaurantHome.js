@@ -10,6 +10,7 @@ import If from '../../utill/If/If';
 import CircularProgress from '@mui/material/CircularProgress';
 import emptyList from '../../../images/empty-list.png';
 import './style.scss'
+import { toast } from 'react-toastify';
 
 const RestaurantHome = () => {
   const params = useParams();
@@ -36,7 +37,7 @@ const RestaurantHome = () => {
       setMenuItems(menuItems);
       setFetching(false);
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
       setFetching(false);
     }
   }

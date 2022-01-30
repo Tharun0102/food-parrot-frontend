@@ -1,9 +1,19 @@
-import { Card, CardContent, Typography, Box, Accordion, AccordionSummary, AccordionDetails, Button, Rating } from '@mui/material';
 import React, { useState } from 'react';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import './order.scss';
+
+import Card from '@mui/material/Card';
+import CardContent from '@mui/material/CardContent';
+import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
+import Accordion from '@mui/material/Accordion';
+import AccordionSummary from '@mui/material/AccordionSummary';
+import AccordionDetails from '@mui/material/AccordionDetails';
+import Button from '@mui/material/Button';
+import Rating from '@mui/material/Rating';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { editOrder } from '../../../api/Order';
-import { useSelector } from 'react-redux'
+import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 
 const Order = ({ data, isCustomer, fetchOrders }) => {
   const user = useSelector((state) => state.user);
@@ -26,12 +36,12 @@ const Order = ({ data, isCustomer, fetchOrders }) => {
     setLoading(true);
     try {
       await editOrder(payload, data?._id, user.token);
-      alert("order updated!")
+      toast.success("order updated succesfully!", { position: toast.POSITION.BOTTOM_RIGHT })
       setLoading(false);
       fetchOrders();
     } catch (err) {
       setLoading(false);
-      alert(err.message)
+      toast.error(err.message)
     }
   }
 
@@ -74,7 +84,7 @@ const Order = ({ data, isCustomer, fetchOrders }) => {
         {data?.status == 'Completed' &&
           <Rating
             precision={1}
-            value={data?.rating || 0}
+            value={Math.ceil(data?.rating) || 0}
             onChange={(event, newValue) => {
               onEditOrder({ rating: newValue });
             }}

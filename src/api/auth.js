@@ -1,6 +1,7 @@
 import axios from 'axios';
 
-import { BASE_URL } from '../constants/constants';
+import { BASE_URL } from '../common/constants';
+import { errorHandler } from './common';
 
 export const UserSignup = async (payload) => {
   try {
@@ -11,7 +12,7 @@ export const UserSignup = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -24,7 +25,7 @@ export const UserLogin = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -37,7 +38,7 @@ export const RestaurantSignup = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -50,6 +51,6 @@ export const RestaurantLogin = async (payload) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }

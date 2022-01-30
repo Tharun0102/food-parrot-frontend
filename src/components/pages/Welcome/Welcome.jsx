@@ -1,20 +1,20 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Box from '@mui/material/Box';
 import Header from '../../utill/Header/Header';
 import './welcome.scss';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
-import { useHistory } from 'react-router';
+import { Redirect, useHistory } from 'react-router-dom';
 import homeImage from './images/home-page-image.jpg'
 import { useSelector } from 'react-redux';
 
 const Welcome = () => {
   const history = useHistory();
   const user = useSelector((state)=>state.user);
-
-  useEffect(()=>{
-    user.isLogged && history.push(`/dashboard/${user.userType}`) 
-  },[])
+  
+  if(user?.isLogged){
+    return <Redirect to={`/dashboard/${user.userType}`}/>
+  }
 
   return (
     <Header page="welcome">

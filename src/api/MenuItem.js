@@ -1,5 +1,6 @@
 import axios from 'axios';
-import { BASE_URL } from '../constants/constants';
+import { BASE_URL } from '../common/constants';
+import { errorHandler } from './common';
 
 export const editMenuItem = async (itemId, payload, token) => {
   console.log(itemId, payload, token);
@@ -11,7 +12,7 @@ export const editMenuItem = async (itemId, payload, token) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 
@@ -24,7 +25,7 @@ export const deleteMenuItem = async (itemId, token) => {
       throw Error(resp.data.error || "something went wrong!");
     }
   } catch (err) {
-    throw Error(err.message || "something went wrong!");
+    errorHandler(err);
   }
 }
 

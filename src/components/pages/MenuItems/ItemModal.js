@@ -9,6 +9,8 @@ import Modal from '@mui/material/Modal';
 import { addMenuItem } from '../../../api/Restaurant';
 import { useSelector } from 'react-redux';
 import { editMenuItem } from '../../../api/MenuItem';
+import { toast } from 'react-toastify';
+import { Logout } from '../../../store/actions/User'
 
 const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => {
   const user = useSelector((state) => state.user);
@@ -46,11 +48,11 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
 
   const handleSubmit = async () => {
     if (input.name.length < 2 || input?.name.length > 25) {
-      alert("name must be b/w 2 and 25 chars");
+      toast.error("name must be b/w 2 and 25 chars");
       return;
     }
     if (input.description.length < 2 || input?.description.length > 25) {
-      alert("description must be b/w 2 and 25 chars");
+      toast.error("description must be b/w 2 and 25 chars");
       return;
     }
 
@@ -66,11 +68,11 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
     try {
       if (editModal) await editMenuItem(data._id, payload, user.token);
       else await addMenuItem(payload, user._id, user.token);
-      alert(editModal ? "updated" : "added!");
+      toast.success(editModal ? "updated" : "added!");
       closeModal();
       fetchItems && fetchItems();
     } catch (err) {
-      alert(err.message)
+      toast.error(err.message)
     }
   }
 

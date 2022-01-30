@@ -6,7 +6,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import If from '../../utill/If/If';
 import emptyList from '../../../images/empty-list.png';
-
+import { toast } from 'react-toastify';
 import './menuItems.scss';
 import MenuItem from '../../utill/MenuItem/MenuItem';
 import ItemModal from './ItemModal';
@@ -28,7 +28,7 @@ const MenuItems = () => {
       const items = await getMenuItems(user._id);
       setItems(items)
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 
@@ -37,12 +37,12 @@ const MenuItems = () => {
       await deleteMenuItem(itemId, user.token);
       fetchItems();
     } catch (err) {
-      alert(err.message);
+      toast.error(err.message);
     }
   }
 
   return (
-    <Header>
+    <Header page='menuItems'>
       <NavBar tab='menuItems'>
         {itemModal && <ItemModal
           itemModal={itemModal}
