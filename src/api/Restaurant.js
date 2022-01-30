@@ -41,13 +41,13 @@ export const getRestaurantStats = async (restaurantId) => {
   }
 }
 
-export const editRestaurant = async (payload, restaurantId, token) => {
+export const editRestaurant = async (payload) => {
   try {
-    const resp = await axios.post(`${BASE_URL}/restaurant/${restaurantId}`,
+    const resp = await axios.post(`${BASE_URL}/restaurant/${payload.restaurantId}`,
       payload,
       {
         headers: {
-          'x-auth-token': token
+          'x-auth-token': payload.token
         }
       })
     if (resp.status === 200) {
@@ -73,12 +73,12 @@ export const getMenuItems = async (restaurantId) => {
   }
 }
 
-export const addMenuItem = async (payload, restaurantId, token) => {
+export const addMenuItem = async (payload) => {
   try {
-    const resp = await axios.post(`${BASE_URL}/restaurant/${restaurantId}/addItem`, payload,
+    const resp = await axios.post(`${BASE_URL}/restaurant/${payload.restaurantId}/addItem`, payload,
       {
         headers: {
-          'x-auth-token': token
+          'x-auth-token': payload.token
         }
       })
     if (resp.status === 200) {

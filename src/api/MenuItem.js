@@ -2,10 +2,9 @@ import axios from 'axios';
 import { BASE_URL } from '../common/constants';
 import { errorHandler } from './common';
 
-export const editMenuItem = async (itemId, payload, token) => {
-  console.log(itemId, payload, token);
+export const editMenuItem = async (payload) => {
   try {
-    const resp = await axios.post(`${BASE_URL}/menuItem/${itemId}`, payload, { headers: { 'x-auth-token': token } })
+    const resp = await axios.post(`${BASE_URL}/menuItem/${payload.itemId}`, payload, { headers: { 'x-auth-token': payload.token } })
     if (resp.status === 200) {
       return resp?.data;
     } else {

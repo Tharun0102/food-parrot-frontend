@@ -13,14 +13,12 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import ItemModal from '../../pages/MenuItems/ItemModal';
 import CustomModal from '../Modal/Modal';
+import { Image } from 'cloudinary-react';
 
 const MenuItem = ({ data, restaurantName, cartItem, isRestaurant, handleDeleteItem, fetchItems }) => {
   const dispatch = useDispatch();
   const [itemModal, setItemModal] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
-
-  const url = data?.imageUrl.split('\\');
-  const imageUrl = `http://localhost:5000/${url[0]}/${url[1]}`;
 
   const handleAddItem = () => {
     dispatch(AddCartItem({ ...data, Restaurant: restaurantName }))
@@ -52,15 +50,25 @@ const MenuItem = ({ data, restaurantName, cartItem, isRestaurant, handleDeleteIt
           <Button variant="contained" color='primary' className='confirm-btn' onClick={handleDelete}>Confirm</Button>
         </Box>
       </CustomModal>
-      <img src={imageUrl || '#'} alt="item-img" className="item-img" />
-      <Box className="item-content" display="flex" flexDirection="column" justifyContent="space-between" alignItems="flex-start">
-        <Typography>{data?.name || '--'}</Typography>
-        <Typography>{data?.description || 'No Description available!'}</Typography>
-        {/* <Box display="flex" flexDirection="column" justifyContent="flex-start">
-          <Rating name="half-rating" value={data?.rating || 0} precision={0.1} readOnly />
-          <Typography>({data?.ratingsCount || 0} ratings)</Typography>
-        </Box> */}
-        <Typography>₹{data?.price || '--'}</Typography>
+      <Box display="flex" justifyContent="flex-start">
+        <div className='item-img'>
+          <Image
+            cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
+            publicId={data?.imageId}
+            width="100"
+            height='100'
+            crop="scale"
+          />
+        </div>
+        <Box className="item-content" display="flex" flexDirection="column" gap="8px" alignItems="flex-start">
+          <Typography style={{ fontSize: '20px' }}>{data?.name || '--'}</Typography>
+          <Typography style={{ fontSize: '16px' }}>{data?.description || 'No Description available!'}</Typography>
+          {/* <Box display="flex" flexDirection="column" justifyContent="flex-start">
+            <Rating name="half-rating" value={data?.rating || 0} precision={0.1} readOnly />
+            <Typography>({data?.ratingsCount || 0} ratings)</Typography>
+          </Box> */}
+          <Typography>₹{data?.price || '--'}</Typography>
+        </Box>
       </Box>
       <Box display="flex" flexDirection="column" alignItems="center" className="item-options">
         <If condition={isRestaurant}>

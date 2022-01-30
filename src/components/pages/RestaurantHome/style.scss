@@ -7,10 +7,13 @@
     margin: 10px 0 20px 30px;
     .restaurant-logo{
       width: 80%;
-      border-radius: 8px;
       margin: 10px auto;
       transition: all .5s;
       animation: fade-enter 2s;
+      img{
+        width: 100%;
+        border-radius: 8px;
+      }
     }
     .details-wrapper{
       width: 80%;

@@ -16,14 +16,14 @@ import { editUser } from '../../../api/User';
 import { CircularProgress } from '@mui/material';
 import NavBar from '../../utill/NavBar/NavBar';
 import {toast} from 'react-toastify';
+import { Image } from 'cloudinary-react';
+import { imageUpload } from '../../../api/upload';
 
 const Profile = () => {
   const dispatch = useDispatch();
   const user=useSelector((state) => state.user);
   const isCustomer = user?.userType === USER;
   const isRestaurantUser = user?.userType === RESTAURANT;
-  const actualUrl = user?.imageUrl?.split('\\');
-  const profileUrl = actualUrl && `http://localhost:5000/${actualUrl[0]}/${actualUrl[1]}`
   const [editing, setEditing] = useState(false);
   const [input, setInput] = useState({
       name: user?.name || '',
@@ -70,18 +70,45 @@ const Profile = () => {
         toast.success("edited succesfully!")
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
       } else {
-        let formData = new FormData();
-        formData.append('name', input.name)
-        formData.append('email', input.email)
-        formData.append('city',input.city);
-        formData.append('street',input.street);
-        formData.append('zip',input.zip);
-        input.image && formData.append('image', input.image);
+        let payload = {
+          ...input,
+          restaurantId: user?._id,
+          token: user.token
+        }
+        if(input.image){
+          const reader = new FileReader();
+          reader.onloadend = async () => {
+            try {
+              const imageId = await imageUpload({
+                imageStr: reader.result,
+                token: user?.token
+              });
+              payload.imageId = imageId;
+              const resp = await editRestaurant(payload);
+              setLoading(false);
+              setEditing(false);
+              toast.success("edited succesfully!")
+              dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
+              setLoading(false);
+              setInput({...input, image: null})
+            } catch (err) {
+              setLoading(false);
+              toast.error("image upload failed!")
+            }
+          };
+          reader.readAsDataURL(input.image);
+          reader.onerror = () => {
+            setLoading(false);
+            toast.error('something went wrong!');
+          };
+          return;
+        }
 
-        const resp = await editRestaurant(formData, user?._id, user?.token);
+        const resp = await editRestaurant(payload);
         setLoading(false);
         setEditing(false);
         toast.success("edited succesfully!")
+        setInput({...input, image: null})
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
       }
     } catch (err) {
@@ -109,7 +136,15 @@ const Profile = () => {
         <Box style={{ pointerEvents: !editing ? 'none' : 'all', opacity: editing ? 1 : .8}} className='profile-content' display="flex" flexDirection="column" justifyContent="space-between" alignItems="flex-start" gap="10px">
           {isRestaurantUser && <Box display="flex" alignItems="center" gap="20px" className='profile-img-wrapper'>
             <Typography className='profile-text'>Profile Picture:</Typography>
-            <img src={profileUrl} className='profile-img' alt="not found"/>
+            <div className='profile-image'>
+              <Image
+                cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
+                publicId={user?.imageId}
+                width="100"
+                height='100'
+                crop="scale"
+              />
+            </div>
           </Box>}
           <Box className="input-container">
             <TextField

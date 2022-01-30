@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { editMenuItem } from '../../../api/MenuItem';
 import { toast } from 'react-toastify';
 import { Logout } from '../../../store/actions/User'
+import { imageUpload } from '../../../api/upload';
 
 const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => {
   const user = useSelector((state) => state.user);
@@ -56,21 +57,49 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
       return;
     }
 
-
-
-    const payload = new FormData();
-    input.image && payload.append("image", input.image);
-    payload.append('name', input.name);
-    payload.append('description', input.description);
-    payload.append('price', input.price);
-    payload.append('restaurantId', user._id);
+    let payload = {
+      name: input.name,
+      description: input.description,
+      price: input.price,
+      restaurantId: user._id,
+      itemId: data?._id,
+      token: user.token
+    };
+    if (input.image) payload.image = input.image;
 
     try {
-      if (editModal) await editMenuItem(data._id, payload, user.token);
-      else await addMenuItem(payload, user._id, user.token);
-      toast.success(editModal ? "updated" : "added!");
-      closeModal();
-      fetchItems && fetchItems();
+      if (editModal) {
+        await editMenuItem(payload);
+        toast.success("updated");
+        closeModal();
+        fetchItems && fetchItems();
+      } else {
+        if (!input.image) {
+          toast.error("image required!");
+          return;
+        }
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          try {
+            const imageId = await imageUpload({
+              imageStr: reader.result,
+              token: user?.token
+            });
+            payload.imageId = imageId;
+            await addMenuItem(payload);
+            toast.success("added!");
+            closeModal();
+            fetchItems && fetchItems();
+          } catch (err) {
+            toast.error("image upload failed!");
+          }
+        };
+        reader.readAsDataURL(input.image);
+        reader.onerror = () => {
+          toast.error('something went wrong!');
+        };
+      }
+
     } catch (err) {
       toast.error(err.message)
     }

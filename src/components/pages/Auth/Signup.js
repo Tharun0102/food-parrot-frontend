@@ -6,17 +6,17 @@ import Typography from '@mui/material/Typography';
 import validate from './Validate';
 import TextField from '@mui/material/TextField';
 import Header from '../../utill/Header/Header';
-import { GoogleLogin } from 'react-google-login';
 import { USER, RESTAURANT } from '../../../common/constants';
-import { toast } from 'react-toastify';
 import './style.scss';
 import { RestaurantSignup, UserSignup } from '../../../api/auth';
 import { UpdateClientUser, UpdateRestaurantUser } from '../../../store/actions/User';
-import { useDispatch } from 'react-redux';
-import CircularProgress from '@mui/material/CircularProgress';
+import { useDispatch, useSelector } from 'react-redux';
+import { CircularProgress } from '@mui/material';
+import { imageUpload } from '../../../api/upload';
+import { toast } from 'react-toastify';
 
 const Signup = () => {
-
+  const user = useSelector((state) => state.user);
   const params = useParams();
   const history = useHistory();
   const dispatch = useDispatch();
@@ -61,7 +61,6 @@ const Signup = () => {
       delete testInput.zip;
       delete testInput.image;
     }
-    testInput.imageUrl = "https://as1.ftcdn.net/v2/jpg/02/96/91/42/1000_F_296914204_8F0EmCJh8nVo7c0MYJtwUdEqnG1xs6Bq.jpg"
     const updatedErrors = validate(testInput);
     let isValid = true;
     Object.keys(updatedErrors).forEach((key) => {
@@ -74,7 +73,6 @@ const Signup = () => {
     //signup
     setLoading(true);
     let payload = { ...input };
-    payload.imageUrl = testInput.imageUrl = "https://as1.ftcdn.net/v2/jpg/02/96/91/42/1000_F_296914204_8F0EmCJh8nVo7c0MYJtwUdEqnG1xs6Bq.jpg"
     try {
       if (params.type === USER) {
         const resp = await UserSignup(payload);
@@ -83,20 +81,33 @@ const Signup = () => {
         dispatch(UpdateClientUser({ ...resp.data, isLogged: true, userType: USER, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/User');
       } else {
-        let formData = new FormData();
-        formData.append('name', input.name)
-        formData.append('password', input.password)
-        formData.append('email', input.email)
-        formData.append('city', input.city)
-        formData.append('street', input.street)
-        formData.append('zip', input.zip)
-        formData.append('image', input.image);
-
-        const resp = await RestaurantSignup(formData);
-        toast.success("signup successful!")
-        setLoading(false);
-        dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
-        history.push('/dashboard/Restaurant');
+        if (!input.image) {
+          toast.error("image required!");
+          setLoading(false);
+          return;
+        }
+        const reader = new FileReader();
+        reader.onloadend = async () => {
+          try {
+            const imageId = await imageUpload({
+              imageStr: reader.result,
+              token: user?.token
+            });
+            payload.imageId = imageId;
+            const resp = await RestaurantSignup(payload);
+            setLoading(false);
+            dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
+            history.push('/dashboard/Restaurant');
+          } catch (err) {
+            setLoading(false);
+            toast.error("image upload failed!")
+          }
+        };
+        reader.readAsDataURL(input.image);
+        reader.onerror = () => {
+          setLoading(false);
+          toast.error('something went wrong!');
+        };
       }
     } catch (err) {
       setLoading(false);

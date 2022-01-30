@@ -11,14 +11,12 @@ import CircularProgress from '@mui/material/CircularProgress';
 import emptyList from '../../../images/empty-list.png';
 import './style.scss'
 import { toast } from 'react-toastify';
+import { Image } from 'cloudinary-react';
 
 const RestaurantHome = () => {
   const params = useParams();
 
   const [data, setData] = useState({});
-  const restaurantImageUrl = data?.imageUrl?.split("\\");
-  const restaurantImg = restaurantImageUrl && `http://localhost:5000/${restaurantImageUrl[0]}/${restaurantImageUrl[1]}`;
-  console.log("restaurantImg", restaurantImg);
   const [menuItems, setMenuItems] = useState([]);
   const [fetching, setFetching] = useState(false);
 
@@ -55,7 +53,13 @@ const RestaurantHome = () => {
             <If condition={!fetching}>
               <Box display="flex" flexDirection="column" alignItems="center">
                 <Box display="flex" flexDirection="column" className='restaurant-details'>
-                  <img src={restaurantImg} className='restaurant-logo' />
+                  <div className='restaurant-logo'>
+                    <Image
+                      cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
+                      publicId={data?.imageId}
+                      crop="scale"
+                    />
+                  </div>
                   <Box className='details-wrapper'>
                     <Typography className='name'>{data?.name}</Typography>
                     <Typography className='description'>{data?.desription || "No Description available!"}</Typography>

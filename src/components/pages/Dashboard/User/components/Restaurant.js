@@ -4,26 +4,25 @@ import CardMedia from '@mui/material/CardMedia';
 import CardContent from '@mui/material/CardContent';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
-
+import { Image } from 'cloudinary-react'
 import './Restaurant.scss';
 import Rating from '@mui/material/Rating';
 import { useHistory } from 'react-router-dom';
 
 const Restaurant = ({ data }) => {
   const history = useHistory();
-  const url = data?.imageUrl.split('\\');
-  const imageUrl = `http://localhost:5000/${url[0]}/${url[1]}`;
   const handleCardClick = () => {
     history.push(`/Restaurant/${data?._id}`);
   }
 
-  return (
+  return (<>
     <Card sx={{ maxWidth: 345 }} className="restaurant-card" onClick={handleCardClick}>
-      <CardMedia
-        component="img"
-        image={imageUrl}
-        alt="No image available"
-        className='card-image-component'
+      <Image
+        cloudName={process.env.REACT_APP_CLOUDINARY_NAME}
+        publicId={data?.imageId}
+        width="270"
+        height='230'
+        crop="scale"
       />
       <CardContent>
         <Typography className="card-title">{data?.name}</Typography>
@@ -39,6 +38,8 @@ const Restaurant = ({ data }) => {
         </Box>
       </CardContent>
     </Card>
+  </>
+
   )
 }
 
