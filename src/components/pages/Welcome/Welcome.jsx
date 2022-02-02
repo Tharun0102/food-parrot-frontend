@@ -7,6 +7,7 @@ import Button from '@mui/material/Button';
 import { Redirect, useHistory } from 'react-router-dom';
 import homeImage from './images/home-page-image.jpg'
 import { useSelector } from 'react-redux';
+import Footer from '../../utill/Footer/Footer';
 
 const Welcome = () => {
   const history = useHistory();
@@ -49,6 +50,7 @@ const Welcome = () => {
           <img src={homeImage} alt="home-page-icon"/>
         </Box>
       </Box>
+      <Footer/>
     </Header>
   )
 }

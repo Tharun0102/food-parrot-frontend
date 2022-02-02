@@ -46,8 +46,8 @@ const Header = (props) => {
     <Box className='main-page'>
       <Box className="header-container">
         <Box display="flex" alignItems="center" className="header-left">
-          {(page !== 'dashboard' && page !== 'welcome' && isRestaurant) &&
-            <div className="back-btn" onClick={()=>history.push('/')} component="span">
+          {(page !== 'dashboard' && page !== 'welcome') &&
+            <div className="back-btn" onClick={()=>history.goBack()} component="span">
               <ArrowBackIcon />
             </div> 
           }
@@ -70,6 +70,9 @@ const Header = (props) => {
             <Typography className='header-item wallet-text'>
               Wallet: {user.wallet}
             </Typography>
+          </If>
+          <If condition={!isLogged && page === 'welcome'}>
+            <Button className="auth-btn" href='#footer-wrapper'>Contact</Button> 
           </If>
           <If condition={!isLogged && page !=='login' && page!=='signup'}>
             <Button className="auth-btn" onClick={handleLoginClick}>Login</Button> 
