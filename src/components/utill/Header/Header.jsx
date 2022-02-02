@@ -8,7 +8,7 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import './style.scss';
 import If from '../If/If';
 import { Logout } from '../../../store/actions/User';
-import {  USER } from '../../../common/constants';
+import {  RESTAURANT, USER } from '../../../common/constants';
 import { ClearCart } from '../../../store/actions/Cart';
 
 const Header = (props) => {
@@ -65,6 +65,11 @@ const Header = (props) => {
             <Button variant="outlined" className='logout-btn' onClick={handleLogout}>
               Logout
             </Button>
+          </If>
+          <If condition={isLogged && user?.userType==RESTAURANT}>
+            <Typography className='header-item wallet-text'>
+              Wallet: {user.wallet}
+            </Typography>
           </If>
           <If condition={!isLogged && page !=='login' && page!=='signup'}>
             <Button className="auth-btn" onClick={handleLoginClick}>Login</Button> 

@@ -37,6 +37,13 @@
       .header-item{
         margin-right: 10px;
       }
+      .wallet-text{
+        letter-spacing: .04em;
+        color: #123FBC;
+        &:hover{
+          color: #3D3D3D;
+        }
+      }
       .header-btn{
         cursor: pointer;
         color: #123FBC;

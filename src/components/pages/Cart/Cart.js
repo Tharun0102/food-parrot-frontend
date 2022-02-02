@@ -62,24 +62,21 @@ const Cart = () => {
       toast.error("mobile number required!");
       return;
     }
-    const payload = {
+    const state = {
       userId: user._id,
       restaurantId: cart[0].restaurantId,
+      restaurantName: itemList[0].Restaurant,
       items: cart,
       order_status: 'Placed',
       address,
       mobile,
-      token: user.token
+      token: user.token,
+      total
     }
-    try {
-      await createOrder(payload);
-      setOrderModal(false);
-      toast.success("order placed!")
-      dispatch(ClearCart());
-      history.push('/orders');
-    } catch (err) {
-      toast.error(err.message);
-    }
+    history.push({
+      pathname: '/payment',
+      state
+    })
   }
 
   const clearCart = () => {
@@ -132,7 +129,6 @@ const Cart = () => {
               onChange={(e) => setMobile(e.target.value)}
             />
           </FormControl>
-          <Typography>Payment Mode: Cash On Delivery</Typography>
           <Typography>Total: {total || 0}</Typography>
           <Box display="flex" gap="20px" justifyContent='center' className='modal-footer'>
             <Button variant="outlined" className='cancel-btn' onClick={() => setOrderModal(false)}>Cancel</Button>
@@ -150,7 +146,7 @@ const Cart = () => {
           <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center" className="items-list">
             {
               itemList.map((item, index) => {
-                return <MenuItem data={item} cartItem />
+                return <MenuItem key={index} data={item} cartItem />
               })
             }
           </Box>

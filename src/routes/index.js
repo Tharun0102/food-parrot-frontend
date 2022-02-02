@@ -3,7 +3,7 @@ import { BrowserRouter, Switch, Redirect, Route } from 'react-router-dom';
 import PrivateRoute from "./PrivateRoute";
 import Loader from "../components/utill/Loader";
 import { useSelector } from "react-redux";
-import { RESTAURANT } from "../common/constants";
+import { RESTAURANT, USER } from "../common/constants";
 
 const Welcome = React.lazy(() => import('../components/pages/Welcome/Welcome'))
 const Login = React.lazy(() => import('../components/pages/Auth/Login.js'))
@@ -13,6 +13,8 @@ const RestaurantHome = React.lazy(() => import('../components/pages/RestaurantHo
 const MenuItems = React.lazy(() => import('../components/pages/MenuItems/MenuItems'))
 const Orders = React.lazy(() => import('../components/pages/Orders/Orders'))
 const Profile = React.lazy(() => import('../components/pages/Profile/Profile'))
+const Payment = React.lazy(() => import('../components/pages/Payment/Payment'))
+const PaymentResponse = React.lazy(() => import('../components/pages/Payment/PaymentResponse'))
 
 const AppRouter = () => {
   const user = useSelector((state) => state.user);
@@ -64,6 +66,17 @@ const AppRouter = () => {
             path="/profile"
             component={Profile}
             isAuthenticated={isAuthenticated}
+          />
+          <PrivateRoute
+            exact
+            path="/payment"
+            component={Payment}
+            isAuthenticated={isAuthenticated && user.userType == USER}
+          />
+          <Route
+            exact
+            path="/payment/:response"
+            component={PaymentResponse}
           />
           <Route
             exact

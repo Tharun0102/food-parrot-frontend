@@ -23,8 +23,6 @@ const Login = () => {
   const history = useHistory();
   const dispatch = useDispatch();
 
-  console.log(params);
-
   let defaultInput = {
     email: '',
     password: ''
@@ -41,7 +39,6 @@ const Login = () => {
     if (params.type !== USER && params.type !== RESTAURANT) {
       history.push("/");
     }
-    console.log(process.env);
   }, [])
 
   const handleSubmit = async () => {
@@ -66,7 +63,6 @@ const Login = () => {
         const resp = await RestaurantLogin(payload);
         toast.success("login successful!")
         setLoading(false);
-        console.log(resp, resp.headers, resp.headers['x-auth-token']);
         dispatch(UpdateRestaurantUser({ ...resp.data, isLogged: true, userType: RESTAURANT, 'x-auth-token': resp.headers['x-auth-token'] }));
         history.push('/dashboard/Restaurant');
       }

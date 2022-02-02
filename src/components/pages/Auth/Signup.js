@@ -50,7 +50,6 @@ const Signup = () => {
     if (params.type !== USER && params.type !== RESTAURANT) {
       history.push("/");
     }
-    console.log(process.env);
   }, [])
 
   const handleSubmit = async () => {
@@ -66,7 +65,6 @@ const Signup = () => {
     Object.keys(updatedErrors).forEach((key) => {
       if (updatedErrors[key].length > 0) isValid = false;
     })
-    console.log(updatedErrors);
     setErrors(updatedErrors);
     if (!isValid) return;
 

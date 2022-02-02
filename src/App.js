@@ -5,11 +5,19 @@ import { PersistGate } from 'redux-persist/es/integration/react';
 import AppRouter from './routes';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { useEffect } from 'react';
 toast.configure()
 
 const { persistor, store } = configureStore();
 
 function App() {
+  // disable right click
+  // useEffect(() => {
+  //   document.addEventListener('contextmenu', (e) => {
+  //     e.preventDefault();
+  //   });
+  // }, [])
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

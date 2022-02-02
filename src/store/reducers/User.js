@@ -3,7 +3,6 @@ const InitialState = {}
 
 const userReducer = (state = InitialState, action) => {
   const { type, payload } = action;
-  console.log("user action", action.payload, type);
 
   switch (type) {
     case UPDATE_RESTAURANT:

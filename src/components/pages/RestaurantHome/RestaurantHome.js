@@ -72,7 +72,7 @@ const RestaurantHome = () => {
                   <Box display="flex" gap="20px" justifyContent="center" alignItems="center" flexWrap="wrap" className="menuItems-list">
                     {
                       menuItems.map((item, index) => {
-                        return <MenuItem data={item} restaurantName={data?.name} />
+                        return <MenuItem key={index} data={item} restaurantName={data?.name} />
                       })
                     }
                   </Box>

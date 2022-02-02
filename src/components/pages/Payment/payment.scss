@@ -1,0 +1,35 @@
+.payment-wrapper{
+  width: 600px;
+  margin: 20px auto;
+  .summary-accordian{
+    margin: 10px 0;
+    .accordian-summary{
+      padding: 0 10px;
+      border-radius: 4px;
+      background-color: #fff7d5c5;
+    }
+    .accordian-details{
+      .items-section{
+        margin: 5px 10px;
+        padding: 5px;
+        border: 1px solid black;
+      }
+    }
+  }
+  .checkout-email-wrapper{
+    margin: 5px 10px;
+    .checkout-text{
+      font-family: Poppins;
+      font-weight: 550;
+    }
+    .checkout-email-field{
+      width: 300px;
+      input{
+        padding: 7px 10px;
+      }
+    }
+  }
+  .payment-footer{
+    margin-top: 20px;
+  }
+}

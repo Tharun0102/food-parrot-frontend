@@ -53,7 +53,7 @@ const MenuItems = () => {
           <If condition={items.length > 0}>
             <Box display="flex" alignItems="center" flexWrap="wrap" gap="20px" className='items-list'>
               {
-                items.map(item => <MenuItem data={item} isRestaurant handleDeleteItem={handleDeleteItem} fetchItems={fetchItems} />)
+                items.map(item => <MenuItem key={item._id} data={item} isRestaurant handleDeleteItem={handleDeleteItem} fetchItems={fetchItems} />)
               }
             </Box>
           </If>

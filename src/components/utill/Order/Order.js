@@ -77,6 +77,7 @@ const Order = ({ data, isCustomer, fetchOrders }) => {
         </Accordion>
         <KeyValue left="Ordered:" value={formattedDate} />
         <KeyValue left="Order Status:" value={data?.status} />
+        <KeyValue left="Payment Mode:" value={data?.paymentMode === 'COD' ? 'Cash On delivery' : data?.paymentMode} />
         <Box display="flex" marginTop="15px" gap="20px">
           {data?.status != 'Cancelled' && data?.status != 'Completed' && <Button variant="contained" className='cancel-btn' onClick={() => onEditOrder({ status: 'Cancelled' })}>Cancel</Button>}
           {!isCustomer && nextState && nextState != 'Placed' && <Button variant="contained" className='status-btn' onClick={() => onEditOrder({ status: nextState })}>Mark as {nextState}</Button>}
