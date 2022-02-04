@@ -15,6 +15,7 @@ import { imageUpload } from '../../../api/upload';
 
 const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => {
   const user = useSelector((state) => state.user);
+  const [loading, setLoading] = useState(false);
   const [input, setInput] = useState({
     name: '',
     description: '',
@@ -66,10 +67,11 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
       token: user.token
     };
     if (input.image) payload.image = input.image;
-
+    setLoading(true);
     try {
       if (editModal) {
         await editMenuItem(payload);
+        setLoading(false);
         toast.success("updated");
         closeModal();
         fetchItems && fetchItems();
@@ -89,13 +91,16 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
             await addMenuItem(payload);
             toast.success("added!");
             closeModal();
+            setLoading(false);
             fetchItems && fetchItems();
           } catch (err) {
+            setLoading(false);
             toast.error("image upload failed!");
           }
         };
         reader.readAsDataURL(input.image);
         reader.onerror = () => {
+          setLoading(false);
           toast.error('something went wrong!');
         };
       }
@@ -139,7 +144,7 @@ const ItemModal = ({ itemModal, setItemModal, data, editModal, fetchItems }) => 
         <input accept='image/*' type="file" className="custom-file-input" onChange={onFileChange} />
         <Box display="flex" gap="20px" justifyContent='center' className='modal-footer'>
           <Button variant="outlined" className='cancel-btn' onClick={closeModal}>Cancel</Button>
-          <Button variant="contained" color='primary' className='confirm-btn' onClick={handleSubmit}>Confirm</Button>
+          <Button variant="contained" color='primary' className='confirm-btn' disabled={loading} onClick={handleSubmit}>Confirm</Button>
         </Box>
       </Box>
     </Modal>
